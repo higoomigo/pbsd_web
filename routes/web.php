@@ -13,8 +13,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+//  DROPDOWN PROFIL //
+Route::get('/about', [UserController::class, 'about'])->name('about');
 Route::get('/visi-misi', [UserController::class, 'visiMisi'])->name('visi-misi');
 Route::get('/struktur-organisasi', [UserController::class, 'strukturOrganisasi'])->name('struktur-organisasi');
+Route::get('/roadmap-asta-cita', [UserController::class, 'roadmapAsta'])->name('roadmap-asta');
+Route::get('/kebijakan-tata-kelola', [UserController::class, 'kebijakan'])->name('kebijakan');
+Route::get('/mitra-strategis', [UserController::class, 'mitra'])->name('mitra');
+
+
 Route::get('/tim-peneliti', [UserController::class, 'timPeneliti'])->name('tim-peneliti');
 Route::get('/kontak', [UserController::class, 'kontak'])->name('kontak');
 Route::get('/berita-pusat-studi', [UserController::class, 'berita'])->name('berita');

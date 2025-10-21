@@ -2,8 +2,7 @@
 @section('title', 'Pusat Studi Pelestarian Bahasa Dan Sastra Daerah')
 @section('content')
 
-Tim Peneliti
-
+About
 
 
 

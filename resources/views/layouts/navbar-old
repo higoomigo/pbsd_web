@@ -39,7 +39,7 @@
           role="menu" aria-label="Profil"
         >
   <!-- inner mengikuti padding container navbar (px-4 md:px-8 lg:px-16) -->
-  {{-- <div class="px-4 md:px-8 lg:px-16 py-4">
+  <div class="px-4 md:px-8 lg:px-16 py-4">
 
     <!-- header tipis -->
     <div class="flex items-center justify-between border-b border-base-200/70 pb-3">
@@ -100,11 +100,11 @@
             </div>
           </a>
         </div>
-      </div> --}}
+      </div>
     </div>
 
         <!-- Profil -->
-        <li class="relative" @mouseenter="openOnHover('profil')" @mouseleave="close('profil')">
+        {{-- <li class="relative" @mouseenter="openOnHover('profil')" @mouseleave="close('profil')">
           <button class="btn btn-ghost px-3" @click="toggle('profil')" :aria-expanded="isOpen('profil')" aria-haspopup="menu">
             <span>Profil</span>
             <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('profil') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor" aria-hidden="true"><path d="M0 0l5 6 5-6H0z"/></svg>
@@ -112,18 +112,18 @@
           <ul x-cloak x-show="isOpen('profil')" x-transition.origin.top.left
               @click.outside="close('profil')"
               class="menu dropdown-content absolute left-0 mt-10 w-64 rounded-xl bg-base-100 p-2 shadow-lg ring-1 ring-black/5 z-50">
-              {{-- <li><a href=" ">Tentang Kami</a></li>
+              <li><a href=" ">Tentang Kami</a></li>
               <li><a href=" ">Struktur & SK</a></li>
               <li><a href=" ">Roadmap & Asta Cita</a></li>
               <li><a href=" ">Kebijakan & Tata Kelola</a></li>
-              <li><a href=" ">Mitra Strategis</a></li> --}}
-            <li><a href="{{ route('visi-misi') }}">Visi Misi</a></li>
-            <li><a href="{{ route('struktur-organisasi') }}">Struktur</a></li>
+              <li><a href=" ">Mitra Strategis</a></li>
+            {{-- <li><a href="{{ route('about') }}">Tentang Kami</a></li>
+            <li><a href="{{ route('struktur') }}">Struktur & SK</a></li>
             <li><a href="{{ route('roadmap-asta') }}">Roadmap & Asta Cita</a></li>
             <li><a href="{{ route('kebijakan') }}">Kebijakan & Tata Kelola</a></li>
-            <li><a href="{{ route('mitra') }}">Mitra Strategis</a></li>
-          </ul>
-        </li> 
+            <li><a href="{{ route('mitra') }}">Mitra Strategis</a></li> --}}
+          {{-- </ul> --}}
+        {{-- </li> --}} 
 
         <!-- Akademik -->
         <li class="relative" @mouseenter="openOnHover('akademik')" @mouseleave="close('akademik')">

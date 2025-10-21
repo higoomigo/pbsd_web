@@ -1,16 +1,16 @@
-@include('layout-web.app')
+@extends('layout-web.menu')
 @section('title', 'Visi Misi')
 @section('content')
 
-<div class="mx-auto md:py-15 sm:px-20 lg:px-40 mt-6 bg-zinc-900">
-    {{-------------- VISI VISI VISI VISI ------------------}}
+<div class="mx-auto md:py-15 sm:px-20  mt-6 bg-base-100">
+    {{-- Visi --}}
     <div class="mb-2">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 md:pt-12">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6 font-">
-                <p class="lg:text-4xl text-5xl font-title  text-start pl-20 text-gray-200">Visi</p>
+                <p class="lg:text-4xl text-5xl font-title  text-start pl-20 text-gray-900">Visi</p>
             </div>
             <div class="col-span-2 px-6 pb-6">
-                <p class="mb-1 text-lg text-gray-200 font-body leading-5">
+                <p class="mb-1 text-lg text-gray-900 font-body leading-5">
                     Menjadi pusat unggulan dalam pelestarian, pengembangan, dan pemanfaatan bahasa dan sastra daerah sebagai warisan budaya yang mendukung identitas lokal dan kemajuan ilmu pengetahuan.
                 </p>
                 <a href="#" class="text-blue-500 hover:underline">Baca Selengkapnya</a>
@@ -20,10 +20,10 @@
         {{-- MISI MISI MISI MISI MISI --}}
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 md:pt-8">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-                <p class="lg:text-4xl text-5xl font-title text-start pl-20 text-gray-200">Misi</p>
+                <p class="lg:text-4xl text-5xl font-title text-start pl-20 text-gray-900">Misi</p>
             </div>
             <div class="col-span-2 px-6 pb-6">
-                <ul class="list-disc mb-6 text-lg font-body text-gray-200 ">
+                <ul class="list-disc mb-6 text-lg font-body text-gray-900 ">
                     <li class="mb-3 leading-5">
                         Mengembangkan dan melestarikan bahasa serta sastra daerah melalui penelitian, pengkajian, dan penerbitan karya ilmiah yang berkualitas.
                     </li>
@@ -57,10 +57,6 @@
     </div> --}}
     </div>
 </div>
-
-
-
-
 
 
 

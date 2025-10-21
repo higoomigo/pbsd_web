@@ -5,8 +5,8 @@
 <!-- GAMBAR DISINI -->
 <div class="w-full">
     {{-- sm:text-6xl text-5xl --}}
-    <div class="font-title  pb-20 md:pb-48 pt-30 md:pt-36 lg:px-28 px-4 md:px-20 md:text-center text-start">
-        <p class="text-cyan-900 md:mb-4  text-3xl sm:text-6xl text-center md:text-start md:mb-2"> Pusat Studi </p>
+    <div class="font-title  pb-20 md:pb-48 pt-30 md:pt-36 lg:px-40 px-4 md:px-20 md:text-center text-start">
+        <p class="text-cyan-900  text-3xl sm:text-6xl text-center md:text-start md:mb-2"> Pusat Studi </p>
         <p class="text-cyan-950 font-normal text-4xl text-center md:text-start sm:text-5xl md:text-7xl"> Pelestarian Bahasa dan Sastra Daerah </p> 
     </div>
 </div>
@@ -20,11 +20,11 @@
     <div class="mb-20">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 md:mt-6 gap-6 mb-6 pt-12 md:pt-40 md:pb-12 ">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-                <p class="lg:text-5xl text-5xl font-title md:pl-5 text-start text-zinc-700">Profil</p>
+                <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-700">Profil</p>
             </div>
             <div class="col-span-2 px-6 pb-6">
                 <p class="mb-4 text-zinc-700 font-body text-lg leading-6 md:pl-12">
-                    <b>Pusat Studi Pelestarian Bahasa dan Sastra Daerah</b> Universitas Negeri Gorontalo hadir sebagai komitmen akademik dalam menjaga eksistensi bahasa dan sastra daerah, khususnya Bahasa Gorontalo. 
+                    <span class="text-xl"><b>Pusat Studi Pelestarian Bahasa dan Sastra Daerah</b> Universitas Negeri Gorontalo hadir sebagai komitmen akademik dalam menjaga eksistensi bahasa dan sastra daerah, khususnya Bahasa Gorontalo.</span>
                     <br class="md:mb-10 mb-5">
                     Pusat studi ini fokus pada kegiatan penelitian, dokumentasi, pengembangan, dan diseminasi pengetahuan bahasa serta sastra daerah sebagai upaya pelestarian warisan budaya yang tak ternilai.
                     <br class="md:mb-10 mb-5">
@@ -40,7 +40,7 @@
 
     {{------------------- CONTAINER VISI MISI ----------}}
     
-    <div class="container mx-auto  sm:px-6 lg:px-36 mt-6 mb-15">
+    {{-- <div class="container mx-auto  sm:px-6 lg:px-36 mt-6 mb-15">
         <div class="mb-15">
             <div class="px-6 py-2 border-blue-200 w-fit mb-4 hover:bg-blue-200 transition-colors duration-200 cursor-pointer">
                 <p class="text-4xl font-bold text-start">Berita Terbaru</p>
@@ -63,15 +63,15 @@
                     <p class="mt-1">Deskripsi singkat berita 3.</p>
                 </div>
             </div> --}}
-        </div>
-    </div>
+        {{-- </div> --}}
+    {{-- </div> --}} 
         
 
     {{-- Berita --}}
     
     
     {{-- Gallery --}}
-    <div class="mb-15">
+    {{-- <div class="mb-15">
         <div class="px-6 py-2 border border-4 border-blue-200 w-full mb-4">
             <p class="text-4xl font-bold text-center">Galeri</p>
         </div>
@@ -89,8 +89,8 @@
                 <p class="mt-2 text-center">Foto Kegiatan 3</p>
             </div>
         </div>
-    </div>
-</div>
+    </div> --}}
+{{-- </div> --}}
 
 <script>
     // Saat mulai scroll, munculkan div hero-image

@@ -105,7 +105,7 @@
                 startAutoPlay();
 
                 // Handle initial hash if someone’s trying to be fancy with URLs
-                const initialHash = window.location.hash.substring(1);
+                const initialHash = window.location.hash.substring(1);  
                 if (initialHash) {
                     const initialIndex = Array.from(items).findIndex(item => item.id === initialHash);
                     if (initialIndex !== -1) goToSlide(initialIndex);
@@ -148,8 +148,12 @@
                 </div>
             </div>
         </div> --}}
-        
-            
+
+            <div class="h-36 w-full px-20 bg-zinc-700">
+                {{-- <div class="container flex items-start pl-20"> --}}
+                    <p class="text-4xl font-title text-white">Visi Misi</p>
+                {{-- </div> --}}
+            </div>
             <div class="container ">
                 @yield('content')
             </div>
