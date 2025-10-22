@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NewsController;
 
 
 Route::get('/', function () {
@@ -24,14 +25,26 @@ Route::get('/mitra-strategis', [UserController::class, 'mitra'])->name('mitra');
 
 Route::get('/tim-peneliti', [UserController::class, 'timPeneliti'])->name('tim-peneliti');
 Route::get('/kontak', [UserController::class, 'kontak'])->name('kontak');
-Route::get('/berita-pusat-studi', [UserController::class, 'berita'])->name('berita');
+// Route::get('/berita-pusat-studi', [UserController::class, 'berita'])->name('berita');
+
+//  News Res.  //
+Route::resource('news', NewsController::class);
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/admin', [UserController::class, 'admin'])->name('admin');
 });
+
+
+
+// HERE GOES THE DUMMY ROUTES
+Route::get('/berita', [UserController::class, 'berita'])->name('berita');
+
+
 
 require __DIR__.'/auth.php';
 

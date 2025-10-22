@@ -49,7 +49,7 @@ class UserController extends Controller
 
     public function berita()
     {
-        return view('user.berita');
+        return view('news.show');
     }
     
 

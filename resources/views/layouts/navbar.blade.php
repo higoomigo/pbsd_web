@@ -13,7 +13,7 @@
       <!-- Mobile burger -->
       <button class="btn btn-ghost lg:hidden" @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen" aria-controls="mobileMenu" aria-label="Buka menu">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
 
@@ -31,13 +31,13 @@
           <a href="{{ url('/') }}" class="rounded-lg" :class="isActive('/') ? 'active bg-base-200' : ''">Beranda</a>
         </li>
 
-        <div
+        {{-- <div
           x-cloak x-show="isOpen('profil')" x-transition.origin.top.left
           @click.outside="close('profil')"1
           class="absolute left-1/2 -translate-x-1/2 mt-6 w-[calc(100vw-2rem)] max-w-[72rem]
                 rounded-2xl bg-base-100/95 backdrop-blur shadow-xl ring-1 ring-black/5 z-50"
           role="menu" aria-label="Profil"
-        >
+        > --}}
   <!-- inner mengikuti padding container navbar (px-4 md:px-8 lg:px-16) -->
   {{-- <div class="px-4 md:px-8 lg:px-16 py-4">
 
@@ -101,23 +101,25 @@
           </a>
         </div>
       </div> --}}
-    </div>
+    {{-- </div> --}}
 
         <!-- Profil -->
         <li class="relative" @mouseenter="openOnHover('profil')" @mouseleave="close('profil')">
           <button class="btn btn-ghost px-3" @click="toggle('profil')" :aria-expanded="isOpen('profil')" aria-haspopup="menu">
             <span>Profil</span>
-            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('profil') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor" aria-hidden="true"><path d="M0 0l5 6 5-6H0z"/></svg>
+                <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('profil') ? 'rotate-180' : ''" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor" >
+            <path d="M1 1l4 4 4-4" />
+          </svg>
           </button>
           <ul x-cloak x-show="isOpen('profil')" x-transition.origin.top.left
               @click.outside="close('profil')"
-              class="menu dropdown-content absolute left-0 mt-10 w-64 rounded-xl bg-base-100 p-2 shadow-lg ring-1 ring-black/5 z-50">
+                class="menu dropdown-content absolute left-0 mt-10 w-72 bg-base-100 p-2 border border-zinc-500  z-50">
               {{-- <li><a href=" ">Tentang Kami</a></li>
               <li><a href=" ">Struktur & SK</a></li>
               <li><a href=" ">Roadmap & Asta Cita</a></li>
               <li><a href=" ">Kebijakan & Tata Kelola</a></li>
               <li><a href=" ">Mitra Strategis</a></li> --}}
-            <li><a href="{{ route('visi-misi') }}">Visi Misi</a></li>
+            <li><a href="{{ route('visi-misi') }}">Visi Misi</a></li> 
             <li><a href="{{ route('struktur-organisasi') }}">Struktur</a></li>
             <li><a href="{{ route('roadmap-asta') }}">Roadmap & Asta Cita</a></li>
             <li><a href="{{ route('kebijakan') }}">Kebijakan & Tata Kelola</a></li>
@@ -129,11 +131,14 @@
         <li class="relative" @mouseenter="openOnHover('akademik')" @mouseleave="close('akademik')">
           <button class="btn btn-ghost px-3" @click="toggle('akademik')" :aria-expanded="isOpen('akademik')" aria-haspopup="menu">
             <span>Akademik</span>
-            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('akademik') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('akademik') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
           </button>
           <ul x-cloak x-show="isOpen('akademik')" x-transition.origin.top.left
               @click.outside="close('akademik')"
-              class="menu dropdown-content absolute left-0 mt-10 w-72 rounded-xl bg-base-100 p-2 shadow-lg ring-1 ring-black/5 z-50">
+              class="menu dropdown-content absolute left-0 mt-10 w-72 bg-base-100 p-2 border border-zinc-500  z-50">
               <li><a href="">Publikasi</a></li>
               <li><a href="">Jurnal yang Dikelola</a></li>
               <li><a href="">Kegiatan Ilmiah</a></li>
@@ -153,11 +158,14 @@
         <li class="relative" @mouseenter="openOnHover('komersial')" @mouseleave="close('komersial')">
           <button class="btn btn-ghost px-3" @click="toggle('komersial')" :aria-expanded="isOpen('komersial')" aria-haspopup="menu">
             <span>Komersialisasi</span>
-            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('komersial') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('komersial') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
           </button>
           <ul x-cloak x-show="isOpen('komersial')" x-transition.origin.top.left
               @click.outside="close('komersial')"
-              class="menu dropdown-content absolute left-0 mt-10 w-72 rounded-xl bg-base-100 p-2 shadow-lg ring-1 ring-black/5 z-50">
+              class="menu dropdown-content absolute left-0 mt-10 w-72 bg-base-100 p-2 border border-zinc-500  z-50">
               <li><a href="">Produk & Inovasi</a></li>
               <li><a href="">Paten & HKI</a></li>
               <li><a href="">Kerja Sama Riset</a></li>
@@ -177,11 +185,14 @@
         <li class="relative" @mouseenter="openOnHover('fasilitas')" @mouseleave="close('fasilitas')">
           <button class="btn btn-ghost px-3" @click="toggle('fasilitas')" :aria-expanded="isOpen('fasilitas')" aria-haspopup="menu">
             <span>Fasilitas</span>
-            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('fasilitas') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('fasilitas') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
           </button>
           <ul x-cloak x-show="isOpen('fasilitas')" x-transition.origin.top.left
               @click.outside="close('fasilitas')"
-              class="menu dropdown-content absolute left-0 mt-10 w-64 rounded-xl bg-base-100 p-2 shadow-lg ring-1 ring-black/5 z-50">
+              class="menu dropdown-content absolute left-0 mt-10 w-72 bg-base-100 p-2 border border-zinc-500  z-50">
               <li><a href="">Fasilitas Riset / Lab</a></li>
               <li><a href="">SOP & Prosedur</a></li>
               <li><a href="">Program Magang</a></li>
@@ -199,11 +210,14 @@
         <li class="relative" @mouseenter="openOnHover('data')" @mouseleave="close('data')">
           <button class="btn btn-ghost px-3" @click="toggle('data')" :aria-expanded="isOpen('data')" aria-haspopup="menu">
             <span>Publikasi & Data</span>
-            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('data') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('data') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
           </button>
           <ul x-cloak x-show="isOpen('data')" x-transition.origin.top.left
               @click.outside="close('data')"
-              class="menu dropdown-content absolute left-0 mt-10 w-72 rounded-xl bg-base-100 p-2 shadow-lg ring-1 ring-black/5 z-50">
+              class="menu dropdown-content absolute left-0 mt-10 w-72 bg-base-100 p-2 border border-zinc-500  z-50">
               <li><a href="">Data Room</a></li>
               <li><a href="">Dashboard KPI</a></li>
               <li><a href="">Dokumen Resmi</a></li>
@@ -221,11 +235,14 @@
         <li class="relative" @mouseenter="openOnHover('kontak')" @mouseleave="close('kontak')">
           <button class="btn btn-ghost px-3" @click="toggle('kontak')" :aria-expanded="isOpen('kontak')" aria-haspopup="menu">
             <span>Kontak</span>
-            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('kontak') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+            <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('kontak') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
           </button>
           <ul x-cloak x-show="isOpen('kontak')" x-transition.origin.top.left
               @click.outside="close('kontak')"
-              class="menu dropdown-content absolute left-0 mt-10 w-64 rounded-xl bg-base-100 p-2 shadow-lg ring-1 ring-black/5 z-50">
+              class="menu dropdown-content absolute left-0 mt-10 w-72 bg-base-100 p-2 border border-zinc-500  z-50">
             {{-- <li><a href="{{ route('ajukan-kolaborasi') }}">Ajukan Kolaborasi</a></li>
             <li><a href="{{ route('permintaan-layanan') }}">Permintaan Layanan</a></li>
             <li><a href="{{ route('kunjungan-reviewer') }}">Kunjungan Reviewer</a></li>
@@ -252,7 +269,7 @@
 
       <!-- CTA Data Borang -->
       {{-- <a href="{{ route('data-room') }}" class="btn btn-primary btn-sm md:btn-md rounded-full">Data Borang</a> --}}
-      <a href="" class="btn btn-primary btn-sm md:btn-md rounded-full">Data Borang</a>
+      <a href="" class="btn bg-white border-2 border-black hover:bg-black hover:text-white btn-sm md:btn-md rounded-full">Data Borang</a>
     </div>
   </nav>
 
@@ -267,7 +284,10 @@
 
       <li x-data="{open:false}">
         <button class="justify-between" @click="open=!open"><span>Profil</span>
-          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
         </button>
         <ul x-cloak x-show="open" x-transition.opacity class="pl-4">
           <li><a href=" ">Tentang Kami</a></li>
@@ -285,7 +305,10 @@
 
       <li x-data="{open:false}">
         <button class="justify-between" @click="open=!open"><span>Akademik</span>
-          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
         </button>
         <ul x-cloak x-show="open" x-transition.opacity class="pl-4">
           <li><a href="">Publikasi</a></li>
@@ -305,7 +328,10 @@
 
       <li x-data="{open:false}">
         <button class="justify-between" @click="open=!open"><span>Komersialisasi</span>
-          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
         </button>
         <ul x-cloak x-show="open" x-transition.opacity class="pl-4">
           <li><a href="">Produk & Inovasi</a></li>
@@ -325,7 +351,10 @@
 
       <li x-data="{open:false}">
         <button class="justify-between" @click="open=!open"><span>Fasilitas</span>
-          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
         </button>
         <ul x-cloak x-show="open" x-transition.opacity class="pl-4">
           <li><a href="">Fasilitas Riset / Lab</a></li>
@@ -343,7 +372,10 @@
 
       <li x-data="{open:false}">
         <button class="justify-between" @click="open=!open"><span>Publikasi & Data</span>
-          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
         </button>
         <ul x-cloak x-show="open" x-transition.opacity class="pl-4">
           <li><a href="">Data Room</a></li>
@@ -361,14 +393,17 @@
 
       <li x-data="{open:false}">
         <button class="justify-between" @click="open=!open"><span>Kontak</span>
-          <svg class="ml-2 h-3 w-3 transition-transform" :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><path d="M0 0l5 6 5-6H0z"/></svg>
+          <svg class="ml-2 h-3 w-3 transition-transform"    :class="open?'rotate-180':''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
+  <path d="M1 1l4 4 4-4" />
+</svg>
+</svg>
         </button>
         <ul x-cloak x-show="open" x-transition.opacity class="pl-4">
-          <li><a href="">Ajukan Kolaborasi</a></li>
+          <li><a href="">Kolaborasi</a></li>
           <li><a href="">Permintaan Layanan</a></li>
           <li><a href="">Kunjungan Reviewer</a></li>
           <li><a href="">Lokasi & Kontak</a></li>
-          {{-- <li><a href="{{ route('ajukan-kolaborasi') }}">Ajukan Kolaborasi</a></li>
+          {{-- <li><a href="{{ route('ajukan-kolaborasi') }}">Kolaborasi</a></li>
           <li><a href="{{ route('permintaan-layanan') }}">Permintaan Layanan</a></li>
           <li><a href="{{ route('kunjungan-reviewer') }}">Kunjungan Reviewer</a></li>
           <li><a href="{{ route('alamat-kontak') }}">Lokasi & Kontak</a></li> --}}

@@ -70,6 +70,24 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.profil')" :active="request()->routeIs('admin.profil')">
+                {{ __('Profil') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.akademik')" :active="request()->routeIs('admin.akademik')">
+                {{ __('Akademik') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.komersialisasi')" :active="request()->routeIs('admin.komersialisasi')">
+                {{ __('Komersialisasi') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.fasilitas')" :active="request()->routeIs('admin.fasilitas')">
+                {{ __('Fasilitas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.publikasi-data')" :active="request()->routeIs('admin.publikasi-data')">
+                {{ __('Publikasi - Data') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.kontak')" :active="request()->routeIs('admin.publikasi-data')">
+                {{ __('Kontak') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

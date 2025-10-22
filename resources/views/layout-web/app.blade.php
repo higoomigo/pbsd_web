@@ -16,18 +16,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
-        
-
-        <style>
-        // <weight>: Use a value from 400 to 900
-        // <uniquifier>: Use a unique and descriptive class name
-        /* .font-playfair {
-            font-family: "Playfair Display", serif;
-            font-optical-sizing: auto;
-            font-weight: 700;
-            /* font-style: normal; */
-        
-        </style>
+    
 
 
             @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -149,10 +138,37 @@
             </div>
         </div> --}}
         
-            
+            @hasSection('judul_halaman')
+                <div class="h-24 px-36 w-full flex items-center">
+                    <div class="container">
+                        <div class="border-b border-zinc-500 pl-10 py-10">
+                            <p class="text-4xl font-title text-zinc-800">@yield('judul_halaman')</p>
+                        </div>
+                    </div>
+                </div>
+            @endif
             <div class="container ">
                 @yield('content')
             </div>
+
+
+        {{-- Footer --}}
+        @include('layouts.footer')
+
+        <script>
+            // Saat mulai scroll, munculkan div hero-image
+            const hero = document.getElementById('hero-image');
+            let heroShown = false;
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10 && !heroShown) {
+                    hero.classList.remove('opacity-0', 'translate-y-8');
+                    hero.classList.add('opacity-100', 'translate-y-0');
+                    heroShown = true;
+                }
+            });
+        </script>
+
         {{-- <script>
             // JavaScript to handle dropdown hover behavior
             document.addEventListener('DOMContentLoaded', () => {

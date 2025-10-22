@@ -1,7 +1,7 @@
-@extends('layout-web.menu')
+@extends('layout-web.app')
 @section('title', 'Visi Misi')
 @section('content')
-
+@section('judul_halaman', 'Visi Misi')
 <div class="mx-auto md:py-15 sm:px-20  mt-6 bg-base-100">
     {{-- Visi --}}
     <div class="mb-2">
@@ -10,15 +10,15 @@
                 <p class="lg:text-4xl text-5xl font-title  text-start pl-20 text-gray-900">Visi</p>
             </div>
             <div class="col-span-2 px-6 pb-6">
-                <p class="mb-1 text-lg text-gray-900 font-body leading-5">
+                <p class="mb-1 text-lg text-gray-900 font-body leading-5 text-justify">
                     Menjadi pusat unggulan dalam pelestarian, pengembangan, dan pemanfaatan bahasa dan sastra daerah sebagai warisan budaya yang mendukung identitas lokal dan kemajuan ilmu pengetahuan.
                 </p>
-                <a href="#" class="text-blue-500 hover:underline">Baca Selengkapnya</a>
+                {{-- <a href="#" class="text-blue-500 hover:underline">Baca Selengkapnya</a> --}}
             </div>
         </div>
 
         {{-- MISI MISI MISI MISI MISI --}}
-        <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 md:pt-8">
+        <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 md:pt-2">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
                 <p class="lg:text-4xl text-5xl font-title text-start pl-20 text-gray-900">Misi</p>
             </div>
