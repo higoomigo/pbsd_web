@@ -15,6 +15,24 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.profil')" :active="request()->routeIs('admin.profil')">
+                        {{ __('Profil') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.akademik')" :active="request()->routeIs('admin.akademik')">
+                        {{ __('Akademik') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.komersialisasi')" :active="request()->routeIs('admin.komersialisasi')">
+                        {{ __('Komersialisasi') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.fasilitas')" :active="request()->routeIs('admin.fasilitas')">
+                        {{ __('Fasilitas') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.publikasi-data')" :active="request()->routeIs('admin.publikasi-data')">
+                        {{ __('Publikasi - Data') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.kontak')" :active="request()->routeIs('admin.kotak')">
+                        {{ __('Kontak') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -85,7 +103,7 @@
             <x-responsive-nav-link :href="route('admin.publikasi-data')" :active="request()->routeIs('admin.publikasi-data')">
                 {{ __('Publikasi - Data') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.kontak')" :active="request()->routeIs('admin.publikasi-data')">
+            <x-responsive-nav-link :href="route('admin.kontak')" :active="request()->routeIs('admin.kotak')">
                 {{ __('Kontak') }}
             </x-responsive-nav-link>
         </div>

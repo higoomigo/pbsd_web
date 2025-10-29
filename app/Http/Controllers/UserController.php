@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    // Landing Routes
+    public function profilFull()
+    {
+        return view('profil.profil_full');
+    }
+
+
     // ====== Dropdown Views
     public function about()
     {

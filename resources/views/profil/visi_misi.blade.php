@@ -2,9 +2,9 @@
 @section('title', 'Visi Misi')
 @section('content')
 @section('judul_halaman', 'Visi Misi')
-<div class="mx-auto md:py-15 sm:px-20  mt-6 bg-base-100">
+<div class="mb-20 px-20">
     {{-- Visi --}}
-    <div class="mb-2">
+    <div class="mb-2 mt-8">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 md:pt-12">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6 font-">
                 <p class="lg:text-4xl text-5xl font-title  text-start pl-20 text-gray-900">Visi</p>

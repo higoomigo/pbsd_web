@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
         <title>@yield('title')</title>
 
         <!-- Fonts -->
@@ -14,6 +15,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet"> --}}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        />
         <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
     
@@ -22,13 +28,16 @@
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         
         <style>
+            element {
+                scrollbar-width: none; /* Hides the scrollbar */
+            }
             .dropdown[open] {
                 display: block;
             }
 
             .fade-in {
                 animation: fadeIn 0.8s both;
-                /* animation-timeline: view(); */
+                animation-timeline: view();
             }
             
             @keyframes fadeIn {
@@ -68,6 +77,7 @@
                             if (autoPlayInterval) {
                                 clearInterval(autoPlayInterval);
                                 startAutoPlay();
+                                
                             }
                         }
                     });
@@ -147,7 +157,7 @@
                     </div>
                 </div>
             @endif
-            <div class="container ">
+            <div class="w-full">
                 @yield('content')
             </div>
 
@@ -167,6 +177,42 @@
                     heroShown = true;
                 }
             });
+
+
+            const options = {
+                root: null,
+                threshold: 0.15,                // muncul saat ~15% elemen terlihat
+                rootMargin: `-${NAVBAR_OFFSET}px 0px 0px 0px`, // kompensasi navbar fixed
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+
+                // Trigger fade-in
+                entry.target.classList.remove('opacity-0', 'translate-y-8');
+                entry.target.classList.add('opacity-100', 'translate-y-0');
+
+                // Observe sekali saja
+                observer.unobserve(entry.target);
+                });
+            }, options);
+
+            // Daftarkan semua elemen fade-in
+            document.querySelectorAll('.fade-in').forEach((el) => {
+                // (opsional) performa lebih halus
+                el.style.willChange = 'opacity, transform';
+                observer.observe(el);
+            });
+
+            // Hormati preferensi reduced motion
+            const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (media.matches) {
+                document.querySelectorAll('.fade-in').forEach((el) => {
+                el.classList.remove('opacity-0', 'translate-y-8');
+                el.classList.add('opacity-100', 'translate-y-0');
+                });
+            }
         </script>
 
         {{-- <script>

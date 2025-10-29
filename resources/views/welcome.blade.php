@@ -3,11 +3,11 @@
 @section('content')
 
 
-<div class="w-full">
+<div class="w-full md:py-48 py-36">
     {{-- sm:text-6xl text-5xl --}}
-    <div class="font-title  pb-20 md:pb-48 pt-30 md:pt-48 lg:px-40 px-4 md:px-20 md:text-center text-start">
-        <p class="text-cyan-950  text-3xl sm:text-6xl text-center md:text-start md:mb-2"> Pusat Studi </p>
-        <p class="text-slate-900 font-normal text-4xl text-center md:text-start sm:text-5xl md:text-7xl"> Pelestarian Bahasa dan Sastra Daerah </p> 
+    <div class="font-title lg:px-40 px-4 md:px-20 md:text-center text-start">
+        <p class="text-zinc-800  text-5xl sm:text-6xl text-start md:mb-2">Pusat Studi</p>
+        <p class="text-slate-900 font-normal text-5xl text-start sm:text-5xl md:text-7xl"> Pelestarian Bahasa dan Sastra Daerah </p> 
     </div>
 </div>
 <div class=" w-full h-[500px]  mb-6 opacity-0 translate-y-8 transition-all duration-700 ease-out mt-20" id="hero-image">
@@ -15,14 +15,14 @@
 </div>
 
 <!-- Main content -->
-<div class="container mx-auto  sm:px-6 lg:px-36 mt-6">
+<div class="container mx-auto  sm:px-6 lg:px-36 mt-6 ">
     {{-- Profil --}}
     <div class="mb-20">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 pt-24 md:pt-40 md:pb-12 ">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-                <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-700">Profil</p>
+                <p class=" lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-700">Profil</p>
             </div>
-            <div class="col-span-2 px-6 pb-6">
+            <div class=" col-span-2 px-6 pb-6">
                 <p class="mb-10 text-zinc-700 font-body text-lg leading-6 md:pl-20">
                     <span class="text-xl"><b>Pusat Studi Pelestarian Bahasa dan Sastra Daerah</b> Universitas Negeri Gorontalo hadir sebagai komitmen akademik dalam menjaga eksistensi bahasa dan sastra daerah, khususnya Bahasa Gorontalo.</span>
                     <br class="md:mb-10 mb-5">
@@ -30,8 +30,8 @@
                     <br class="md:mb-10 mb-5">
                     Melalui kolaborasi lintas disiplin, PSPBSD menjadi wadah strategis yang menghubungkan akademisi, budayawan, dan masyarakat dalam memperkuat identitas lokal di tengah tantangan global.
                 </p>
-                <div class=" w-full text-end mt-8 ">
-                    <a href="#" class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900 relative leading-4
+                <div class="w-full text-end mt-8 ">
+                    <a href="{{ route('profil-full') }}" class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900 relative leading-4
                   bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
                   transition-[background-size] duration-500 ease-in-out
                   group-hover:bg-[length:100%_1px] ">Baca Selengkapnya</a>
@@ -55,7 +55,7 @@
 
     {{-- ----------- Berita --------- --}}
     <div class="mb-16 px-6">
-        {{-- <a href="{{ route('berita') }}"></a> --}}
+        {{-- <a href="{{ route('beritashow') }}"></a> --}}
         <div class=" pb-1 w-full">
             <p class=" text-5xl font-title md:pl-5 text-start text-zinc-700 ">Berita Terbaru</p>
         </div>
@@ -66,21 +66,26 @@
                 <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
                             outline outline-0 hover:outline-2 hover:outline-zinc-800 hover:outline-offset-4 p-4">
                     <figure>
-                        <a href="{{ route('berita') }}">
+                        <a href="{{ route('beritashow') }}">
                         <img
                         class="h-cover ease-in-out"
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                        src="{{ asset('images/foto6.jpeg') }}"
                         alt="Shoes" />
                         </a>
                     </figure>
                     <div class="mt-4">
                         <div class="w-fit mb-1">
-                            <a href="{{ route('berita') }}" 
+                            <a href="{{ route('beritashow') }}" 
                                 class=" text-xl text-zinc-800 font-title relative leading-4
                   bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
                   transition-[background-size] duration-500 ease-in-out
                   group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                                Makan Spatu Nike memang enak dan sangat bermandfaat
+                                Pelestarian Bahasa Daerah: Inovasi Komunitas dan Teknologi
+                                {{-- 
+                                Alternatif judul:
+                                - Bahasa Lokal di Tengah Globalisasi: Tantangan & Peluang
+                                - Digitalisasi Bahasa Daerah: Dari Arsip ke Aplikasi Pembelajaran
+                                --}}
                             </a>
                         </div>
                         <p class="text-zinc-500 text-sm">A card component has a figure, a body part, and inside body there are title and actions parts</p>
@@ -90,21 +95,21 @@
                 <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
                             outline outline-0 hover:outline-2 hover:outline-zinc-800 hover:outline-offset-4 p-4">
                     <figure>
-                        <a href="{{ route('berita') }}">
+                        <a href="{{ route('beritashow') }}">
                         <img
                         class="h-cover ease-in-out"
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                        src="{{ asset('images/foto5.jpeg') }}"
                         alt="Shoes" />
                         </a>
                     </figure>
                     <div class="mt-4">
                         <div class="w-fit mb-1">
-                            <a href="{{ route('berita') }}" 
+                            <a href="{{ route('beritashow') }}" 
                                 class=" text-xl text-zinc-800 font-title relative leading-4
                   bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
                   transition-[background-size] duration-500 ease-in-out
                   group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                                Makan Spatu Nike memang enak dan sangat bermandfaat
+                                Bahasa Lokal di Tengah Globalisasi: Tantangan & Peluang
                             </a>
                         </div>
                         <p class="text-zinc-500 text-sm">A card component has a figure, a body part, and inside body there are title and actions parts</p>
@@ -114,21 +119,21 @@
                 <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
                             outline outline-0 hover:outline-2 hover:outline-zinc-800 hover:outline-offset-4 p-4">
                     <figure>
-                        <a href="{{ route('berita') }}">
+                        <a href="{{ route('beritashow') }}">
                         <img
                         class="h-cover ease-in-out"
-                        src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                        src="{{ asset('images/foto4.jpeg') }}"
                         alt="Shoes" />
                         </a>
                     </figure>
                     <div class="mt-4">
                         <div class="w-fit mb-1">
-                            <a href="{{ route('berita') }}" 
+                            <a href="{{ route('beritashow') }}" 
                                 class=" text-xl text-zinc-800 font-title relative leading-4
                   bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
                   transition-[background-size] duration-500 ease-in-out
                   group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                                Makan Spatu Nike memang enak dan sangat bermandfaat
+                                Digitalisasi Bahasa Daerah: Dari Arsip ke Aplikasi Pembelajaran
                             </a>
                         </div>
                         <p class="text-zinc-500 text-sm">A card component has a figure, a body part, and inside body there are title and actions parts</p>
@@ -136,7 +141,7 @@
                 </div>
             </div>
             <div class=" w-full text-end mt-8 ">
-                <a href="{{ route('berita') }}" class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900 relative leading-4
+                <a href="{{ route('beritashow') }}" class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900 relative leading-4
                 bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
                 transition-[background-size] duration-500 ease-in-out
                 group-hover:bg-[length:100%_1px] ">Lihat Semua Berita</a>
@@ -149,10 +154,92 @@
 </div>
 {{-- ----------- Gallery --------- --}}
 <div class="mb-12 sm:px-6 lg:px-36 mt-6 bg-zinc-900">
-    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 pt-24 md:pt-20 md:pb-12 ">
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-3  pt-24 md:pt-20 ">
+
         <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-            <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-400">Arsip <br> & Galeri</p>
+            <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-200">Arsip <br> & Galeri</p>
         </div>
+
+        <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
+                    outline outline-0 hover:outline-2 hover:outline-gray-200 hover:outline-offset-4 p-4">
+            <figure>
+                <a href="{{ route('beritashow') }}">
+                <img
+                class="h-cover ease-in-out"
+                src="{{ asset('images/foto2.jpeg') }}"
+                alt="Shoes" />
+                </a>
+            </figure>
+            <div class="mt-4">
+                <div class="w-fit mb-1">
+                    <a href="{{ route('beritashow') }}" 
+                        class=" text-xl text-gray-200 font-title relative leading-4
+            bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
+            transition-[background-size] duration-500 ease-in-out
+            group-hover:bg-[length:100%_1px] hover:text-cyan-700">
+                        Studi Banding ke Universitas Pendidikan Indonesia, Bandung
+                    </a>
+                    <p class="text-zinc-500 text-sm">27/10/2025</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
+                    outline outline-0 hover:outline-2 hover:outline-gray-200 hover:outline-offset-4 p-4">
+            <figure>
+                <a href="{{ route('beritashow') }}">
+                <img
+                class="h-cover ease-in-out"
+                src="{{ asset('images/foto1.jpeg') }}"
+                alt="Shoes" />
+                </a>
+            </figure>
+            <div class="mt-4">
+                <div class="w-fit mb-1">
+                    <a href="{{ route('beritashow') }}" 
+                        class=" text-xl text-gray-200 font-title relative leading-4
+            bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
+            transition-[background-size] duration-500 ease-in-out
+            group-hover:bg-[length:100%_1px] hover:text-cyan-700">
+                        Studi Banding ke Universitas Pendidikan Indonesia, Bandung
+                    </a>
+                    <p class="text-zinc-500 text-sm">27/10/2025</p>
+                </div>
+
+            </div>
+        </div>
+        {{-- <div class="col-span-1"></div> --}}
+
+        {{-- <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
+                    outline outline-0 hover:outline-2 hover:outline-gray-200 hover:outline-offset-4 p-4">
+            <figure>
+                <a href="{{ route('beritashow') }}">
+                <img
+                class="h-cover ease-in-out"
+                src=""
+                alt="Shoes" />
+                </a>
+            </figure>
+            <div class="mt-4">
+                <div class="w-fit mb-1">
+                    <a href="{{ route('beritashow') }}" 
+                        class=" text-xl text-gray-200 font-title relative leading-4
+            bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
+            transition-[background-size] duration-500 ease-in-out
+            group-hover:bg-[length:100%_1px] hover:text-cyan-700">
+                        Studi Banding ke Universitas Pendidikan Indonesia, Bandung
+                    </a>
+                    <p class="text-zinc-500 text-sm">27/10/2025</p>
+                </div>
+
+            </div>
+        </div> --}}
+    </div>
+    <div class=" text-end pb-12">
+        <a href="{{ route('beritashow') }}" class="w-2/3 btn rounded-none hover:bg-zinc-100 border bg-zinc-900 text-zinc-100 text-md hover:text-zinc-900 relative leading-4
+        bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
+        transition-[background-size] duration-500 ease-in-out
+        group-hover:bg-[length:100%_1px] ">Lihat Galeri</a>
     </div>
     {{-- <p class="lg:text-[50px] text-5xl font-title md:pl-12 text-start text-zinc-700">Arsip dan Galeri</p>
     <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 pt-24 md:pt-20 md:pb-12">
@@ -163,9 +250,9 @@
 
 {{-- Kontak Kami --}}
 <div class="container mx-auto sm:px-6 lg:px-36 mt-6 mb-20">
-    <div class=" gap-10 items-start">
+    <div class=" gap-10 items-start hover:outline-2">
         {{-- Form --}}
-        <div class="bg-white p-8 rounded-lg shadow-sm outline outline-0 hover:outline-2 hover:outline-zinc-100 transition-all">
+        <div class="bg-white p-8 rounded-lg shadow-sm outline outline-0 grouphover:outline-2 hover:outline-zinc-100 transition-all">
             <p class="text-5xl font-title text-zinc-800 mb-4">Kontak Kami</p>
             <p class="text-zinc-500 mb-6">Isi form untuk kolaborasi.</p>
 
@@ -183,13 +270,6 @@
                     <input id="email" name="email" type="email" required
                         class="w-full px-4 py-3 border border-zinc-200 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-200"
                         placeholder="email@domain.com" />
-                </div>
-
-                <div>
-                    <label for="subject" class="block text-sm text-zinc-700 mb-1">Subjek</label>
-                    <input id="subject" name="subject" type="text"
-                        class="w-full px-4 py-3 border border-zinc-200 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-200"
-                        placeholder="Nama kegiatan / topik singkat" />
                 </div>
 
                 <div>

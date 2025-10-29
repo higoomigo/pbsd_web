@@ -18,7 +18,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                   <p class="text-lg"> PSPBSD / CILO </p>
+                   <p class="text-lg"> P.B.S.D / C.I.L.O </p>
                 </a>
             </div>
 

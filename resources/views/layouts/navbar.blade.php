@@ -140,13 +140,13 @@
               @click.outside="close('akademik')"
               class="menu dropdown-content absolute left-0 mt-10 w-72 bg-base-100 p-2 border border-zinc-500  z-50">
               <li><a href="">Publikasi</a></li>
-              <li><a href="">Jurnal yang Dikelola</a></li>
+              <li><a href="">Jurnal Pusat Studi</a></li>
               <li><a href="">Kegiatan Ilmiah</a></li>
               <li><a href="">Kunjungan Internasional</a></li>
               <li><a href="">Profil Peneliti</a></li>
               <li><a href="">Lulusan S3</a></li>
             {{-- <li><a href="{{ route('publikasi') }}">Publikasi (SINTA/Scopus/Q1-Q2)</a></li>
-            <li><a href="{{ route('jurnal') }}">Jurnal yang Dikelola (OJS)</a></li>
+            <li><a href="{{ route('jurnal') }}">Jurnal Pusat Studi</a></li>
             <li><a href="{{ route('kegiatan-ilmiah') }}">Kegiatan Ilmiah</a></li>
             <li><a href="{{ route('kunjungan-internasional') }}">Kunjungan Internasional</a></li>
             <li><a href="{{ route('peneliti') }}">Profil Peneliti</a></li>
@@ -236,9 +236,9 @@
           <button class="btn btn-ghost px-3" @click="toggle('kontak')" :aria-expanded="isOpen('kontak')" aria-haspopup="menu">
             <span>Kontak</span>
             <svg class="ml-1 h-3 w-3 transition-transform duration-200" :class="isOpen('kontak') ? 'rotate-180' : ''" viewBox="0 0 10 6" fill="currentColor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6" fill="none" stroke="currentColor">
-  <path d="M1 1l4 4 4-4" />
-</svg>
-</svg>
+            <path d="M1 1l4 4 4-4" />
+          </svg>
+          </svg>
           </button>
           <ul x-cloak x-show="isOpen('kontak')" x-transition.origin.top.left
               @click.outside="close('kontak')"
@@ -312,13 +312,13 @@
         </button>
         <ul x-cloak x-show="open" x-transition.opacity class="pl-4">
           <li><a href="">Publikasi</a></li>
-          <li><a href="">Jurnal yang Dikelola</a></li>
+          <li><a href="">Jurnal Pusat Studi</a></li>
           <li><a href="">Kegiatan Ilmiah</a></li>
           <li><a href="">Kunjungan Internasional</a></li>
           <li><a href="">Profil Peneliti</a></li>
           <li><a href="">Lulusan S3</a></li>
           {{-- <li><a href="{{ route('publikasi') }}">Publikasi</a></li>
-          <li><a href="{{ route('jurnal') }}">Jurnal yang Dikelola</a></li>
+          <li><a href="{{ route('jurnal') }}">Jurnal Pusat Studi</a></li>
           <li><a href="{{ route('kegiatan-ilmiah') }}">Kegiatan Ilmiah</a></li>
           <li><a href="{{ route('kunjungan-internasional') }}">Kunjungan Internasional</a></li>
           <li><a href="{{ route('peneliti') }}">Profil Peneliti</a></li>
