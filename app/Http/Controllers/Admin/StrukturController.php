@@ -12,7 +12,7 @@ class StrukturController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.profil.struktur.create');
     }
 
     /**

@@ -12,7 +12,7 @@ class KebijakanController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.profil.kebijakan.create');
     }
 
     /**

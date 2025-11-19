@@ -17,10 +17,10 @@
 <!-- Main content -->
 <div class="container mx-auto  sm:px-6 lg:px-36 mt-6 ">
     {{-- Profil --}}
-    <div class="mb-20">
+    <div class="mb-18">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 pt-24 md:pt-40 md:pb-12 ">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-                <p class=" lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-700">Profil</p>
+                <p class=" lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-700">Tentang <br> Kami</p>
             </div>
             <div class=" col-span-2 px-6 pb-6">
                 <p class="mb-10 text-zinc-700 font-body text-lg leading-6 md:pl-20">
@@ -39,140 +39,305 @@
             </div>
         </div>
     </div>
-
-    <div class="mb-12">
+</div>
+<div class="container mx-auto  sm:px-6 lg:px-36">
+    <div class="mb-12  pt-24 md:pt-20">
         {{-- <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 pt-24 md:pt-20 md:pb-12 ">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
                 <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-center text-zinc-700">Fokus Penelitian</p>
             </div>
         </div> --}}
-        <p class="lg:text-[50px] text-5xl font-title md:pl-12 text-start text-zinc-700">Fokus Penelitian</p>
-        <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 pt-24 md:pt-20 md:pb-12">
-            <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
+        <p class="lg:text-[50px] text-5xl font-title  text-center text-zinc-700">Mitra Kami</p>
+
+        <div class="relative mt-6 w-full flex justify-center">
+            <!-- Left / Right buttons positioned at the sides of the wrapping div -->
+            <button id="partners-prev" aria-label="Previous"
+            class="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-2 bg-white rounded-full  ">
+            <svg class="w-5 h-5 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            </button>
+
+            <button id="partners-next" aria-label="Next"
+            class="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 bg-white rounded-full  ">
+            <svg class="w-5 h-5 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+            </button>
+
+            <!-- Scrollable carousel -->
+            <div id="partners-carousel" class="overflow-x-auto scroll-smooth -mx-2 py-2" style="scrollbar-width: none; -ms-overflow-style: none;">
+            <div class="flex gap-6 px-2">
+                @foreach ($mitra as $m)
+                @php
+                    // URL logo (kalau kamu pakai Storage public)
+                    $logoUrl = $m->logo_path ? Storage::url($m->logo_path) : null;
+
+                    // Fallback inisial (2 huruf dari dua kata pertama)
+                    $parts = preg_split('/\s+/', trim($m->nama ?? ''), -1, PREG_SPLIT_NO_EMPTY);
+                    $initials = '';
+                    foreach (array_slice($parts, 0, 2) as $p) { $initials .= mb_substr($p, 0, 1); }
+                    $initials = mb_strtoupper($initials ?: '—');
+
+                    // Target link (website jika ada, else non-aktif)
+                    $href = $m->website ?: 'javascript:void(0)';
+                @endphp
+
+                <div class="partner-item flex-none w-40 sm:w-48 lg:w-56 bg-white overflow-hidden p-6
+                            flex flex-col items-center text-center transition">
+                    <a href="{{ $href }}" @if($m->website) target="_blank" rel="noopener" @endif
+                    class="w-20 h-20 sm:w-24 sm:h-24 mb-3 rounded-full overflow-hidden bg-zinc-100
+                            flex items-center justify-center border border-zinc-200">
+                    @if($logoUrl)
+                        <img src="{{ $logoUrl }}"
+                            alt="{{ $m->nama ?? 'Logo Mitra' }}"
+                            class="w-full h-full object-contain p-1"
+                            loading="lazy" decoding="async" />
+                    @else
+                        <span class="text-zinc-500 text-sm font-semibold select-none">{{ $initials }}</span>
+                    @endif
+                    </a>
+
+                    <p class="font-title font-semibold text-sm text-zinc-800 line-clamp-2">
+                    {{ $m->nama }}
+                    </p>
+                    @if(!empty($m->jenis))
+                    <p class="text-xs text-zinc-500 mt-0.5">{{ $m->jenis }}</p>
+                    @endif
+                </div>
+                @endforeach
+            
+            </div>
             </div>
         </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const carousel = document.getElementById('partners-carousel');
+            const prev = document.getElementById('partners-prev');
+            const next = document.getElementById('partners-next');
+
+            // gap in px should match Tailwind gap-6 -> 1.5rem -> 24px
+            const GAP = 24;
+
+            function itemWidth() {
+            const item = carousel.querySelector('.partner-item');
+            if (!item) return carousel.clientWidth * 0.8;
+            return Math.round(item.getBoundingClientRect().width) + GAP;
+            }
+
+            function scrollByAmount(dir = 1) {
+            const amount = itemWidth() * 2; // scroll by 2 items at a time
+            carousel.scrollBy({ left: dir * amount, behavior: 'smooth' });
+            }
+
+            if (prev) prev.addEventListener('click', () => scrollByAmount(-1));
+            if (next) next.addEventListener('click', () => scrollByAmount(1));
+
+            // Optional: allow dragging to scroll for desktop
+            let isDown = false, startX, scrollLeft;
+            carousel.addEventListener('mousedown', (e) => {
+            isDown = true;
+            carousel.classList.add('cursor-grabbing');
+            startX = e.pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+            });
+            window.addEventListener('mouseup', () => {
+            isDown = false;
+            carousel.classList.remove('cursor-grabbing');
+            });
+            carousel.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - carousel.offsetLeft;
+            const walk = (x - startX) * 1; // scroll-fast multiplier
+            carousel.scrollLeft = scrollLeft - walk;
+            });
+        });
+        </script>
     </div>
-
-    {{-- ----------- Berita --------- --}}
-    <div class="mb-16 px-6">
-        {{-- <a href="{{ route('beritashow') }}"></a> --}}
-        <div class=" pb-1 w-full">
-            <p class=" text-5xl font-title md:pl-5 text-start text-zinc-700 ">Berita Terbaru</p>
-        </div>
-
-        {{-- CARD BERITA BOS --}}
-        <div class="container mx-auto">
-            <div class="grid md:grid-cols-3 gap-14 ">
-                <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
-                            outline outline-0 hover:outline-2 hover:outline-zinc-800 hover:outline-offset-4 p-4">
-                    <figure>
-                        <a href="{{ route('beritashow') }}">
-                        <img
-                        class="h-cover ease-in-out"
-                        src="{{ asset('images/foto6.jpeg') }}"
-                        alt="Shoes" />
-                        </a>
-                    </figure>
-                    <div class="mt-4">
-                        <div class="w-fit mb-1">
-                            <a href="{{ route('beritashow') }}" 
-                                class=" text-xl text-zinc-800 font-title relative leading-4
-                  bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
-                  transition-[background-size] duration-500 ease-in-out
-                  group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                                Pelestarian Bahasa Daerah: Inovasi Komunitas dan Teknologi
-                                {{-- 
-                                Alternatif judul:
-                                - Bahasa Lokal di Tengah Globalisasi: Tantangan & Peluang
-                                - Digitalisasi Bahasa Daerah: Dari Arsip ke Aplikasi Pembelajaran
-                                --}}
-                            </a>
-                        </div>
-                        <p class="text-zinc-500 text-sm">A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    </div>
-                </div>
-
-                <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
-                            outline outline-0 hover:outline-2 hover:outline-zinc-800 hover:outline-offset-4 p-4">
-                    <figure>
-                        <a href="{{ route('beritashow') }}">
-                        <img
-                        class="h-cover ease-in-out"
-                        src="{{ asset('images/foto5.jpeg') }}"
-                        alt="Shoes" />
-                        </a>
-                    </figure>
-                    <div class="mt-4">
-                        <div class="w-fit mb-1">
-                            <a href="{{ route('beritashow') }}" 
-                                class=" text-xl text-zinc-800 font-title relative leading-4
-                  bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
-                  transition-[background-size] duration-500 ease-in-out
-                  group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                                Bahasa Lokal di Tengah Globalisasi: Tantangan & Peluang
-                            </a>
-                        </div>
-                        <p class="text-zinc-500 text-sm">A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    </div>
-                </div>
-
-                <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
-                            outline outline-0 hover:outline-2 hover:outline-zinc-800 hover:outline-offset-4 p-4">
-                    <figure>
-                        <a href="{{ route('beritashow') }}">
-                        <img
-                        class="h-cover ease-in-out"
-                        src="{{ asset('images/foto4.jpeg') }}"
-                        alt="Shoes" />
-                        </a>
-                    </figure>
-                    <div class="mt-4">
-                        <div class="w-fit mb-1">
-                            <a href="{{ route('beritashow') }}" 
-                                class=" text-xl text-zinc-800 font-title relative leading-4
-                  bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
-                  transition-[background-size] duration-500 ease-in-out
-                  group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                                Digitalisasi Bahasa Daerah: Dari Arsip ke Aplikasi Pembelajaran
-                            </a>
-                        </div>
-                        <p class="text-zinc-500 text-sm">A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    </div>
-                </div>
-            </div>
-            <div class=" w-full text-end mt-8 ">
-                <a href="{{ route('beritashow') }}" class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900 relative leading-4
-                bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
-                transition-[background-size] duration-500 ease-in-out
-                group-hover:bg-[length:100%_1px] ">Lihat Semua Berita</a>
+</div>
+<div class="container mx-auto  sm:px-6 lg:px-36 mt-6">
+    <div class="mt-32 mb-16">
+        <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 pt-24 md:pt-4 md:pl-5 "> 
+            <div class="col-span-1 pb-1 w-full">
+                <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-700">Artikel Terbitan</p>
             </div>
         </div>
+        <ul class="list bg-base-100 px-6 mt-6" role="list">
+            {{-- ITEM 1 --}}
+            <li class="border-b-2 border-b-zinc-200">
+                <a href=""
+                class="flex items-start gap-4 py-6 px-4 rounded-none hover:bg-zinc-100 focus:bg-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
+                <div class="text-4xl font-thin text-zinc-800/40 tabular-nums min-w-12 text-center">01</div>
+
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-zinc-800 leading-snug">
+                    Dokumentasi Bahasa Gorontalo: Metodologi dan Hasil Awal
+                    </h3>
+                    <div class="text-xs uppercase font-semibold text-zinc-600 mt-0.5">
+                    S. Rahim, A. Nur — <time datetime="2025-05-10">10 Mei 2025</time>
+                    </div>
+                    <p class="text-sm text-zinc-600 mt-1">
+                    Studi ini memaparkan pendekatan dokumentasi lapangan dan analisis fonologi pada variasi bahasa Gorontalo di dua kabupaten.
+                    </p>
+                </div>
+
+                <span class="inline-flex items-center justify-center btn btn-square btn-ghost"
+                        aria-hidden="true">
+                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
+                        <path d="M6 3L20 12 6 21 6 3z"></path>
+                    </g>
+                    </svg>
+                </span>
+                </a>
+            </li>
+
+            {{-- ITEM 2 --}}
+            <li class="border-b-2 border-b-zinc-200">
+                <a href="#" class="flex items-start gap-4 py-6 px-4 rounded-none hover:bg-zinc-100 focus:bg-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
+                <div class="text-4xl font-thin text-zinc-800/40 tabular-nums min-w-12 text-center">02</div>
+
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-zinc-800 leading-snug">
+                    Pelestarian Sastra Lisan: Arsip Audio dan Transkripsi
+                    </h3>
+                    <div class="text-xs uppercase font-semibold text-zinc-600 mt-0.5">
+                    R. Putri, M. Latu — <time datetime="2025-04-02">02 Apr 2025</time>
+                    </div>
+                    <p class="text-sm text-zinc-600 mt-1">
+                    Artikel membahas pembangunan arsip audio terstandarisasi dan teknik transkripsi berbasis komunitas untuk cerita rakyat lokal.
+                    </p>
+                </div>
+
+                <span class="inline-flex items-center justify-center btn btn-square btn-ghost" aria-hidden="true">
+                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
+                        <path d="M6 3L20 12 6 21 6 3z"></path>
+                    </g>
+                    </svg>
+                </span>
+                </a>
+            </li>
+
+            {{-- ITEM 3 --}}
+            <li class="border-b-2 border-b-zinc-200">
+                <a href="#" class="flex items-start gap-4 py-6 px-4 rounded-none hover:bg-zinc-100 focus:bg-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
+                <div class="text-4xl font-thin text-zinc-800/40 tabular-nums min-w-12 text-center">03</div>
+
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-zinc-800 leading-snug">
+                    Integrasi Teknologi dalam Pembelajaran Bahasa Daerah
+                    </h3>
+                    <div class="text-xs uppercase font-semibold text-zinc-600 mt-0.5">
+                    L. Hidayat, E. Sari — <time datetime="2025-03-18">18 Mar 2025</time>
+                    </div>
+                    <p class="text-sm text-zinc-600 mt-1">
+                    Evaluasi prototipe aplikasi pembelajaran bahasa daerah yang menggabungkan audio native speaker dan kuis interaktif.
+                    </p>
+                </div>
+
+                <span class="inline-flex items-center justify-center btn btn-square btn-ghost" aria-hidden="true">
+                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
+                        <path d="M6 3L20 12 6 21 6 3z"></path>
+                    </g>
+                    </svg>
+                </span>
+                </a>
+            </li>
+        </ul>
 
         
     </div>
 
+    {{-- ----------- Berita --------- --}}
+    <div class="mt-32 mb-16 px-6">
+  <div class="pb-1 w-full">
+    <p class="text-5xl font-title md:pl-5 text-start text-zinc-700">Kegiatan Terbaru</p>
+  </div>
+
+  <div class="container mx-auto">
+    <div class="grid md:grid-cols-3 gap-6 xl:gap-12">
+      @forelse($beritaTerbaru as $b)
+        @php
+          $thumb      = $b->thumbnail_path ? Storage::url($b->thumbnail_path) : asset('images/placeholder-16x9.png');
+          $tgl        = optional($b->published_at)->translatedFormat('d M Y');
+          $ringkas    = $b->ringkasan ?: '—';
+          // Penulis (opsional): pakai relasi author() bila ada; kalau tidak, coba kolom 'penulis'; kalau tidak ada juga, null
+          $authorName = (method_exists($b, 'author') ? optional($b->author)->name : null) ?? ($b->penulis ?? null);
+        @endphp
+
+        <article class="col-span-1 group duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
+                        outline outline-0 hover:outline-1 hover:outline-zinc-800 hover:outline-offset-2 p-4 bg-white rounded-md">
+          <figure class="aspect-video w-full overflow-hidden rounded">
+            <a href="{{ route('guest.berita.show', $b->slug) }}">
+              <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                   src="{{ $thumb }}" alt="{{ $b->judul }}">
+            </a>
+          </figure>
+
+          <div class="mt-4">
+            <div class="w-fit mb-1">
+              <a href="{{ route('guest.berita.show', $b->slug) }}"
+                 class="text-xl text-zinc-800 font-title relative leading-6
+                        bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
+                        transition-[background-size] duration-500 ease-in-out
+                        group-hover:bg-[length:100%_1px] hover:text-zinc-500">
+                {{ $b->judul }}
+              </a>
+            </div>
+
+            <p class="text-[12px] text-zinc-500">
+              <span class="uppercase font-semibold">{{ $b->kategori ?? 'Kegiatan' }}</span>
+              — <time datetime="{{ optional($b->published_at)?->format('Y-m-d') }}">{{ $tgl ?: '—' }}</time>
+              @if($authorName) · <span>{{ $authorName }}</span> @endif
+            </p>
+
+            <p class="text-zinc-600 text-sm mt-2 line-clamp-2">{{ $ringkas }}</p>
+          </div>
+        </article>
+      @empty
+        <div class="col-span-3">
+          <div class="p-6 rounded-lg border text-zinc-600">Belum ada berita terbit.</div>
+        </div>
+      @endforelse
+    </div>
+
+    <div class="w-full text-end mt-8">
+      <a href="{{ route('guest.berita.index') }}"
+         class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900">
+        Lihat Semua Berita
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
 </div>
 {{-- ----------- Gallery --------- --}}
-<div class="mb-12 sm:px-6 lg:px-36 mt-6 bg-zinc-900">
-    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-3  pt-24 md:pt-20 ">
+<div class="mb-12 sm:px-6 lg:px-36 mt-32 bg-zinc-900">
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-3  pt-24 md:pt-12 ">
 
         <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
             <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-200">Arsip <br> & Galeri</p>
         </div>
 
         <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
-                    outline outline-0 hover:outline-2 hover:outline-gray-200 hover:outline-offset-4 p-4">
+                    outline outline-0 hover:outline-1 hover:outline-gray-200 hover:outline-offset-4 p-4">
             <figure>
-                <a href="{{ route('beritashow') }}">
+                <a href="{{ route('media') }}">
                 <img
-                class="h-cover ease-in-out"
+                class="w-full h-[200px] object-cover ease-in-out"
                 src="{{ asset('images/foto2.jpeg') }}"
                 alt="Shoes" />
                 </a>
             </figure>
             <div class="mt-4">
                 <div class="w-fit mb-1">
-                    <a href="{{ route('beritashow') }}" 
+                    <a href="{{ route('media') }}" 
                         class=" text-xl text-gray-200 font-title relative leading-4
             bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
             transition-[background-size] duration-500 ease-in-out
@@ -185,18 +350,18 @@
             </div>
         </div>
         <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
-                    outline outline-0 hover:outline-2 hover:outline-gray-200 hover:outline-offset-4 p-4">
+                    outline outline-0 hover:outline-1 hover:outline-gray-200 hover:outline-offset-4 p-4">
             <figure>
-                <a href="{{ route('beritashow') }}">
+                <a href="{{ route('media') }}">
                 <img
-                class="h-cover ease-in-out"
+                class="w-full h-[200px] object-cover ease-in-out"
                 src="{{ asset('images/foto1.jpeg') }}"
                 alt="Shoes" />
                 </a>
             </figure>
             <div class="mt-4">
                 <div class="w-fit mb-1">
-                    <a href="{{ route('beritashow') }}" 
+                    <a href="{{ route('media') }}" 
                         class=" text-xl text-gray-200 font-title relative leading-4
             bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
             transition-[background-size] duration-500 ease-in-out
@@ -211,9 +376,9 @@
         {{-- <div class="col-span-1"></div> --}}
 
         {{-- <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
-                    outline outline-0 hover:outline-2 hover:outline-gray-200 hover:outline-offset-4 p-4">
+                    outline outline-0 hover:outline-1 hover:outline-gray-200 hover:outline-offset-4 p-4">
             <figure>
-                <a href="{{ route('beritashow') }}">
+                <a href="{{ route('media') }}">
                 <img
                 class="h-cover ease-in-out"
                 src=""
@@ -222,7 +387,7 @@
             </figure>
             <div class="mt-4">
                 <div class="w-fit mb-1">
-                    <a href="{{ route('beritashow') }}" 
+                    <a href="{{ route('media') }}" 
                         class=" text-xl text-gray-200 font-title relative leading-4
             bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
             transition-[background-size] duration-500 ease-in-out
@@ -236,7 +401,7 @@
         </div> --}}
     </div>
     <div class=" text-end pb-12">
-        <a href="{{ route('beritashow') }}" class="w-2/3 btn rounded-none hover:bg-zinc-100 border bg-zinc-900 text-zinc-100 text-md hover:text-zinc-900 relative leading-4
+        <a href="{{ route('media') }}" class="w-2/3 btn rounded-none hover:bg-zinc-100 border bg-zinc-900 text-zinc-100 text-md hover:text-zinc-900 relative leading-4
         bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
         transition-[background-size] duration-500 ease-in-out
         group-hover:bg-[length:100%_1px] ">Lihat Galeri</a>
@@ -248,11 +413,85 @@
     </div> --}}
 </div>
 
+<section id="kontak" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-start mb-16">
+            <h2 id="contact-title" class="font-title text-5xl text-zinc-900 mb-3">Kontak &amp; Kolaborasi</h2>
+            <p class="text-lg text-gray-700 max-w-3xl">Hubungi kami untuk kemitraan penelitian, konsultasi, atau informasi lebih lanjut</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12">
+            <div>
+            <h3 class="font-playfair text-2xl font-title text-zinc-900 mb-6">Informasi Kontak</h3>
+            <div class="space-y-6">
+            <div class="flex items-start space-x-4"><i class="fas fa-map-marker-alt text-xl text-blue-600 mt-1"></i>
+            <div>
+                <h4 class="font-semibold mb-1">Alamat</h4>
+                <p class="text-gray-600">Gedung LPPM Universitas Negeri Gorontalo
+                    Jl. Jend. Sudirman, Wumialo, Kec. Kota Tengah, Kota Gorontalo, Gorontalo 96138
+                </p>
+            </div>
+            </div>
+            <div class="flex items-start space-x-4"><i class="fas fa-phone text-xl text-blue-600 mt-1"></i>
+            <div>
+                <h4 class="font-semibold mb-1">Telepon</h4>
+                <p class="text-gray-600">+62 852 5656 6817</p>
+            </div>
+            </div>
+            <div class="flex items-start space-x-4"><i class="fas fa-envelope text-xl text-blue-600 mt-1"></i>
+            <div>
+                <h4 class="font-semibold mb-1">Email</h4>
+                <p class="text-gray-600">info@psplsd.ui.ac.id</p>
+            </div>
+            </div>
+            <div class="flex items-start space-x-4"><i class="fas fa-globe text-xl text-blue-600 mt-1"></i>
+            {{-- <div>
+                <h4 class="font-semibold mb-1">Website</h4>
+                <p class="text-gray-600">www.psplsd.ui.ac.id</p>
+            </div> --}}
+            </div>
+            </div>
+            <div class="mt-8 p-6 bg-zinc-800 rounded-xl">
+            <h4 class="font-semibold text-zinc-100 mb-3">Jam Operasional</h4>
+            <div class="text-sm text-slate-100 space-y-1">
+            <div class="flex justify-between"><span>Senin - Jumat</span> <span>08:00 - 17:00 WIB</span>
+            </div>
+            <div class="flex justify-between"><span>Sabtu & Minggu</span> <span>Tutup</span>
+            </div>
+            {{-- <div class="flex justify-between"><span>Minggu</span> <span>Tutup</span>
+            </div> --}}
+            </div>
+            </div>
+            </div>
+            <div>
+            <h3 class="font-playfair text-2xl font-title text-zinc-800 mb-6">Formulir Kolaborasi</h3>
+                <form class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label> <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="institution" class="block text-sm font-medium text-gray-700 mb-2">Institusi</label> <input type="text" id="institution" name="institution" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label> <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="collaboration-type" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kolaborasi</label> <select id="collaboration-type" name="collaboration-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option>Penelitian Bersama</option> <option>Konsultasi Akademik</option> <option>Kemitraan Industri</option> <option>Program Magang</option> <option>Lainnya</option> </select>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Pesan</label> <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-lg font-semibold transition-colors"> Kirim Proposal Kolaborasi </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 {{-- Kontak Kami --}}
-<div class="container mx-auto sm:px-6 lg:px-36 mt-6 mb-20">
-    <div class=" gap-10 items-start hover:outline-2">
+{{-- <div class="container mx-auto sm:px-6 lg:px-36 mt-6 mb-20">
+    <div class=" gap-10 items-start hover:outline-1">
         {{-- Form --}}
-        <div class="bg-white p-8 rounded-lg shadow-sm outline outline-0 grouphover:outline-2 hover:outline-zinc-100 transition-all">
+        {{-- <div class="bg-white p-8 rounded-lg shadow-sm outline outline-0 grouphover:outline-1 hover:outline-zinc-100 transition-all">
             <p class="text-5xl font-title text-zinc-800 mb-4">Kontak Kami</p>
             <p class="text-zinc-500 mb-6">Isi form untuk kolaborasi.</p>
 
@@ -286,7 +525,7 @@
                     </button>
                 </div>
             </form>
-        </div>
+        </div> --}}
 
         {{-- Kontak, Alamat & Sosial --}}
         {{-- <div class="bg-zinc-50 p-8 rounded-lg">
@@ -339,8 +578,8 @@
                 </div>
             </div>
         </div> --}}
-    </div>
-</div>
+    {{-- </div>
+</div> --}}
     {{-- <div class="container mx-auto  sm:px-6 lg:px-36 mt-6 mb-15">
         <div class="mb-15">
             <div class="px-6 py-2 border-blue-200 w-fit mb-4 hover:bg-blue-200 transition-colors duration-200 cursor-pointer">
@@ -373,7 +612,7 @@
     
     {{-- Gallery --}}
     {{-- <div class="mb-15">
-        <div class="px-6 py-2 border border-4 border-blue-200 w-full mb-4">
+        <div class="px-6 py-2 border-4 border-blue-200 w-full mb-4">
             <p class="text-4xl font-bold text-center">Galeri</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

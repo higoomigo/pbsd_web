@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
+                        <p class="font-bold text-zinc-800">Admin Dashboard</p>
                     </a>
                 </div>
 
@@ -15,22 +16,22 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.profil')" :active="request()->routeIs('admin.profil')">
-                        {{ __('Profil') }}
+                    <x-nav-link :href="route('admin.profil.index')" :active="request()->routeIs('admin.profil.*')">
+                        {{ __('Tentang Kami') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.akademik')" :active="request()->routeIs('admin.akademik')">
+                    {{-- <x-nav-link :href="route('admin.akademik.index')" :active="request()->routeIs('admin.akademik.*')">
                         {{ __('Akademik') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.komersialisasi')" :active="request()->routeIs('admin.komersialisasi')">
+                    </x-nav-link> --}}
+                    {{-- <x-nav-link :href="route('admin.komersialisasi.index')" :active="request()->routeIs('admin.komersialisasi.*')">
                         {{ __('Komersialisasi') }}
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('admin.publikasi-data.index')" :active="request()->routeIs('admin.publikasi-data.*')">
+                        {{ __('Publikasi') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.fasilitas')" :active="request()->routeIs('admin.fasilitas')">
+                    <x-nav-link :href="route('admin.fasilitas.index')" :active="request()->routeIs('admin.fasilitas.*')">
                         {{ __('Fasilitas') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.publikasi-data')" :active="request()->routeIs('admin.publikasi-data')">
-                        {{ __('Publikasi - Data') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.kontak')" :active="request()->routeIs('admin.kotak')">
+                    <x-nav-link :href="route('admin.kontak.index')" :active="request()->routeIs('admin.kotak.*')">
                         {{ __('Kontak') }}
                     </x-nav-link>
                 </div>
@@ -88,22 +89,22 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.profil')" :active="request()->routeIs('admin.profil')">
+            <x-responsive-nav-link :href="route('admin.profil.index')" :active="request()->routeIs('admin.profil.*')">
                 {{ __('Profil') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.akademik')" :active="request()->routeIs('admin.akademik')">
+            <x-responsive-nav-link :href="route('admin.akademik.index')" :active="request()->routeIs('admin.akademik.*')">
                 {{ __('Akademik') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.komersialisasi')" :active="request()->routeIs('admin.komersialisasi')">
+            {{-- <x-responsive-nav-link :href="route('admin.komersialisasi.index')" :active="request()->routeIs('admin.komersialisasi.*')">
                 {{ __('Komersialisasi') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.fasilitas')" :active="request()->routeIs('admin.fasilitas')">
-                {{ __('Fasilitas') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.publikasi-data')" :active="request()->routeIs('admin.publikasi-data')">
+            </x-responsive-nav-link> --}}
+            <x-responsive-nav-link :href="route('admin.publikasi-data.berita.index')" :active="request()->routeIs('admin.publikasi-data.*')">
                 {{ __('Publikasi - Data') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.kontak')" :active="request()->routeIs('admin.kotak')">
+            <x-responsive-nav-link :href="route('admin.fasilitas.index')" :active="request()->routeIs('admin.fasilitas.*')">
+                {{ __('Fasilitas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.kontak.index')" :active="request()->routeIs('admin.kotak.*')">
                 {{ __('Kontak') }}
             </x-responsive-nav-link>
         </div>

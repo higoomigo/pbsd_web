@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Berita;
+use App\Models\VisiMisi;
+use App\Http\Controller\VisiMisiController;
 
 class AdminController extends Controller
 {
@@ -15,7 +18,10 @@ class AdminController extends Controller
 
     public function adminProfil()
     {
-        return view('admin.profil.index');
+        // $visimisi = VisiMisi::find(1);
+        // return view('admin.profil.index', compact('visimisi'));
+
+        return to_route('admin.profil.visimisi.index');
     }
 
     public function adminAkademik()
@@ -23,10 +29,10 @@ class AdminController extends Controller
         return view('admin.akademik.index');
     }
 
-    public function adminKomersialisasi()
-    {
-        return view('admin.komersialisasi.index');
-    }
+    // public function adminKomersialisasi()
+    // {
+    //     return view('admin.komersialisasi.index');
+    // }
 
     public function adminFasilitas()
     {
@@ -35,7 +41,8 @@ class AdminController extends Controller
 
     public function adminPublikasiData()
     {
-        return view('admin.publikasi-data.index');
+        $berita = Berita::all();
+        return to_route('admin.publikasi-data.berita.index');
     }
 
     public function adminKontak()

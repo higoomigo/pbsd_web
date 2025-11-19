@@ -1,12 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Menu Publikasi dan Data  ') }}
+            {{ __('Menu Berita') }}
         </h2>
+        {{-- <div class="mt-5">
+            <div class="max-w-7xl">
+                <div class="hidden space-x-5 sm:-my-px sm:flex">
+                    <x-nav-publikasi :href="route('berita.index')" :active="request()->routeIs('admin.publikasi-data.index')">
+                        {{ __('Berita') }}
+                    </x-nav-publikasi>
+                    <x-nav-publikasi :href="route('berita.index')" :active="request()->routeIs('admin.publikasi-data.dokumen')">
+                        {{ __('Dokumen') }}
+                    </x-nav-publikasi>
+                    {{-- <x-nav-link :href="route('admin.profil')" :active="request()->routeIs('admin.profil')">
+                        {{ __('Profil') }}
+                    </x-nav-link> --}}
+                    
+                {{-- </div>
+            </div>
+        </div> --}}
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
+    
+    {{-- 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-md transition-shadow mb-4">
                 <div class="overflow-hidden group shadow-sm sm:rounded-lg hover:shadow-md transition-shadow">
                     <a href="{{ route('berita.index') }}" class="btn bg-white flex justify-between p-8">
@@ -38,5 +54,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </x-app-layout>
