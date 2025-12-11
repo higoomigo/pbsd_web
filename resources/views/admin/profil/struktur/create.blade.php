@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Menu Profil') }} — Edit Struktur Organisasi
+            {{ __('Menu Profil — Edit Struktur Organisasi') }} 
         </h2>
     </x-slot>
 
     <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 " data-theme="light">
             <div class="overflow-hidden group shadow-sm sm:rounded-lg hover:shadow-md transition-shadow bg-white p-6">
                 <div class="flex items-center justify-between mb-4">
                     <p class="font-semibold text-zinc-900 text-lg">Edit Struktur Organisasi</p>
@@ -30,12 +30,12 @@
                 @endif
 
                 {{-- $struktur diasumsikan dikirim dari controller --}}
-                <form action="{{ route('admin.profil.struktur.create', $struktur->id ?? '') }}" 
+                <form action="{{ route('admin.profil.struktur.store' ) }}" 
                       method="POST" 
                       enctype="multipart/form-data"
                       class="space-y-6">
                     @csrf
-                    @method('PUT')
+                    @method('POST')
 
                     {{-- Teks Penjelasan --}}
                     <div>

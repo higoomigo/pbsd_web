@@ -13,7 +13,7 @@
                 ->map(fn($t)=>trim($t))->filter();
 @endphp
 
-<div class="mb-20 px-44 pt-12">
+<div class="mb-20 md:px-44 pt-12">
   {{-- Header judul + meta --}}
   <header class="max-w-3xl">
     <h1 class="text-2xl sm:text-3xl md:text-4xl font-title text-zinc-900 leading-tight">

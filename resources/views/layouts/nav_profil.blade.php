@@ -4,7 +4,7 @@
             <x-nav-link :href="route('admin.profil.index')" :active="request()->routeIs('admin.profil.visimisi.*')">
                 {{ __('Visi Misi') }}
             </x-nav-link>
-            <x-nav-link :href="route('admin.profil.struktur.index')" :active="request()->routeIs('admin.profil.struktur.*')">
+            <x-nav-link :href="route('admin.profil.struktur.create')" :active="request()->routeIs('admin.profil.struktur.*')">
                 {{ __('Struktur') }}
             </x-nav-link>
             <x-nav-link :href="route('admin.profil.kebijakan.index')" :active="request()->routeIs('admin.profil.kebijakan.*')">
@@ -12,6 +12,9 @@
             </x-nav-link>
             <x-nav-link :href="route('admin.profil.mitra.index')" :active="request()->routeIs('admin.profil.mitra.*')">
                 {{ __('Mitra') }}
+            </x-nav-link>
+            <x-nav-link :href="route('admin.profil.peneliti.index')" :active="request()->routeIs('admin.profil.peneliti.*')">
+                {{ __('Profil Peneliti') }}
             </x-nav-link>
             {{-- <x-nav-link :href="route('admin.profil')" :active="request()->routeIs('admin.profil')">
                 {{ __('Profil') }}

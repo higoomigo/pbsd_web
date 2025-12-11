@@ -1,0 +1,124 @@
+{{-- resources/views/admin/artikel/show.blade.php --}}
+<x-app-layout>
+  <x-slot name="header">
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        {{ __('Menu Artikel') }} — Lihat Artikel
+      </h2>
+
+      {{-- Kembali --}}
+      <button type="button"
+              class="inline-flex items-center gap-2 px-3 py-2 rounded-md border text-zinc-700 bg-zinc-50 hover:bg-white"
+              onclick="(document.referrer ? history.back() : (window.location='{{ route('admin.publikasi-data.artikel.index') }}'))">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        Kembali
+      </button>
+    </div>
+  </x-slot>
+
+  <div class="py-10">
+    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+      <div class="bg-white shadow-sm sm:rounded-lg p-6 space-y-6">
+
+        {{-- Judul + Meta --}}
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold text-zinc-900">{{ $artikel->judul }}</h1>
+
+          @php
+            $tgl        = optional($artikel->published_at)->format('d M Y');
+            $statusVal  = $artikel->status ?? ($artikel->published_at ? 'Terbit' : 'Draft');
+            $statusCls  = $statusVal === 'Terbit' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700';
+            // Penulis prioritas ke kolom penulis (custom), fallback relasi author()->name, lalu '-'
+            $authorName = $artikel->penulis ?: (optional($artikel->author)->name ?? '-');
+          @endphp
+
+          <div class="mt-2 flex flex-col md:flex-row md:items-center gap-2 text-sm text-zinc-600">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center px-2 py-0.5 rounded bg-zinc-100 text-zinc-700">
+                {{ $artikel->kategori ?? '—' }}
+              </span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded {{ $statusCls }}">
+                {{ $statusVal }}
+              </span>
+            </div>
+            <div class="md:ml-3">Terbit: <span class="font-medium">{{ $tgl ?: '—' }}</span></div>
+            <div class="md:ml-3">Penulis: <span class="font-medium">{{ $authorName }}</span></div>
+          </div>
+        </div>
+
+        {{-- Thumbnail --}}
+        
+            @if($artikel->thumbnail_path)
+            <div class="border rounded-md overflow-hidden">
+                <div class="aspect-[16/9] bg-zinc-100 flex items-center justify-center">
+                    <img src="{{ Storage::url($artikel->thumbnail_path) }}"
+                        alt="{{ $artikel->judul }}" class="w-full h-full object-cover">
+                </div>
+            </div>
+            @else
+                <div class=""></div>
+            @endif
+          
+
+        {{-- Ringkasan (opsional) --}}
+        @if(!empty($artikel->ringkasan))
+          <div class="p-4 rounded-md bg-zinc-50 border text-zinc-700">
+            <p class="text-sm leading-relaxed">{{ $artikel->ringkasan }}</p>
+          </div>
+        @endif
+
+        {{-- Konten --}}
+        <article class="prose max-w-none prose-zinc text-zinc-800">
+          {!! $artikel->konten !!}
+        </article>
+
+        {{-- Tag --}}
+        @php
+          $tags = collect(explode(',', $artikel->tag ?? ''))
+                    ->map(fn($t)=>trim($t))
+                    ->filter()
+                    ->values();
+        @endphp
+        @if($tags->isNotEmpty())
+          <div class="pt-2">
+            <div class="text-sm text-zinc-500 mb-2">Tag:</div>
+            <div class="flex flex-wrap gap-2">
+              @foreach($tags as $t)
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs">
+                  # {{ $t }}
+                </span>
+              @endforeach
+            </div>
+          </div>
+        @endif
+
+        {{-- Aksi --}}
+        <div class="pt-4 flex items-center justify-between">
+          <div class="text-xs text-zinc-400">
+            Dibuat: {{ optional($artikel->created_at)->format('d M Y H:i') }} —
+            Diperbarui: {{ optional($artikel->updated_at)->format('d M Y H:i') }}
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="{{ route('admin.publikasi-data.artikel.edit', $artikel->id) }}"
+               class="px-3 py-2 rounded-md border text-zinc-700 hover:bg-gray-50">Edit</a>
+
+            <form action="{{ route('admin.publikasi-data.artikel.destroy', $artikel->id) }}"
+                  method="POST" onsubmit="return confirm('Hapus artikel ini?');">
+              @csrf @method('DELETE')
+              <button type="submit" class="px-3 py-2 rounded-md border text-red-700 hover:bg-red-50">Hapus</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  @push('head')
+    <style>
+      .prose img{border-radius:.5rem;}
+      .prose h2,.prose h3{scroll-margin-top:6rem;}
+      .prose a{ text-decoration: underline; }
+    </style>
+  @endpush
+</x-app-layout>

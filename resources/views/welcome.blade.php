@@ -30,12 +30,12 @@
                     <br class="md:mb-10 mb-5">
                     Melalui kolaborasi lintas disiplin, PSPBSD menjadi wadah strategis yang menghubungkan akademisi, budayawan, dan masyarakat dalam memperkuat identitas lokal di tengah tantangan global.
                 </p>
-                <div class="w-full text-end mt-8 ">
+                {{-- <div class="w-full text-end mt-8 ">
                     <a href="{{ route('profil-full') }}" class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900 relative leading-4
                   bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
                   transition-[background-size] duration-500 ease-in-out
                   group-hover:bg-[length:100%_1px] ">Baca Selengkapnya</a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -86,24 +86,24 @@
                 <div class="partner-item flex-none w-40 sm:w-48 lg:w-56 bg-white overflow-hidden p-6
                             flex flex-col items-center text-center transition">
                     <a href="{{ $href }}" @if($m->website) target="_blank" rel="noopener" @endif
-                    class="w-20 h-20 sm:w-24 sm:h-24 mb-3 rounded-full overflow-hidden bg-zinc-100
-                            flex items-center justify-center border border-zinc-200">
+                    class="w-32 h-32 sm:w-24 sm:h-24 mb-3 rounded-full overflow-hidden 
+                            flex items-center justify-center ">
                     @if($logoUrl)
                         <img src="{{ $logoUrl }}"
                             alt="{{ $m->nama ?? 'Logo Mitra' }}"
                             class="w-full h-full object-contain p-1"
                             loading="lazy" decoding="async" />
                     @else
-                        <span class="text-zinc-500 text-sm font-semibold select-none">{{ $initials }}</span>
+                        <span class="text-zinc-500 text-xs font-title font-light select-none">{{ $initials }}</span>
                     @endif
                     </a>
-
-                    <p class="font-title font-semibold text-sm text-zinc-800 line-clamp-2">
+{{-- 
+                    <p class="font-semibold text-sm text-zinc-800 line-clamp-2">
                     {{ $m->nama }}
                     </p>
                     @if(!empty($m->jenis))
                     <p class="text-xs text-zinc-500 mt-0.5">{{ $m->jenis }}</p>
-                    @endif
+                    @endif --}}
                 </div>
                 @endforeach
             
@@ -157,7 +157,67 @@
         </script>
     </div>
 </div>
-<div class="container mx-auto  sm:px-6 lg:px-36 mt-6">
+<div class="container mx-auto  sm:px-6 lg:px-36 mt-44">
+    <div class="mt-32 mb-16 px-6">
+    <div class="pb-1 w-full">
+        <p class="text-5xl font-title md:pl-5 text-start text-zinc-700">Kegiatan Terbaru</p>
+    </div>
+
+    <div class="container mx-auto">
+        <div class="grid md:grid-cols-3 gap-6 xl:gap-12">
+        @forelse($beritaTerbaru as $b)
+            @php
+            $thumb      = $b->thumbnail_path ? Storage::url($b->thumbnail_path) : asset('images/placeholder-16x9.png');
+            $tgl        = optional($b->published_at)->translatedFormat('d M Y');
+            $ringkas    = $b->ringkasan ?: '—';
+            // Penulis (opsional): pakai relasi author() bila ada; kalau tidak, coba kolom 'penulis'; kalau tidak ada juga, null
+            $authorName = (method_exists($b, 'author') ? optional($b->author)->name : null) ?? ($b->penulis ?? null);
+            @endphp
+
+            <article class="col-span-1 group duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
+                            outline outline-0 hover:outline-1 hover:outline-zinc-800 hover:outline-offset-2 p-4 bg-white ">
+            <figure class="aspect-video w-full overflow-hidden">
+                <a href="{{ route('guest.berita.show', $b->slug) }}">
+                <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    src="{{ $thumb }}" alt="{{ $b->judul }}">
+                </a>
+            </figure>
+
+            <div class="mt-4">
+                <div class="w-fit mb-1">
+                <a href="{{ route('guest.berita.show', $b->slug) }}"
+                    class="text-xl text-zinc-800 font-title relative leading-6
+                            bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
+                            transition-[background-size] duration-500 ease-in-out
+                            group-hover:bg-[length:100%_1px] hover:text-zinc-500">
+                    {{ $b->judul }}
+                </a>
+                </div>
+
+                <p class="text-[12px] text-zinc-500">
+                <span class="uppercase font-semibold">{{ $b->kategori ?? 'Kegiatan' }}</span>
+                — <time datetime="{{ optional($b->published_at)?->format('Y-m-d') }}">{{ $tgl ?: '—' }}</time>
+                @if($authorName) · <span>{{ $authorName }}</span> @endif
+                </p>
+
+                <p class="text-zinc-600 text-sm mt-2 line-clamp-2">{{ $ringkas }}</p>
+            </div>
+            </article>
+        @empty
+            <div class="col-span-3">
+                <div class="p-6 rounded-lg border text-zinc-600">Belum ada kegiatan terbaru.</div>
+            </div>
+        @endforelse
+        </div>
+
+        <div class="w-full text-end mt-4">
+        <a href="{{ route('guest.berita.index') }}"
+            class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900">
+            Lihat Semua Berita
+        </a>
+        </div>
+    </div>
+</div>
     <div class="mt-32 mb-16">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 pt-24 md:pt-4 md:pl-5 "> 
             <div class="col-span-1 pb-1 w-full">
@@ -165,255 +225,123 @@
             </div>
         </div>
         <ul class="list bg-base-100 px-6 mt-6" role="list">
-            {{-- ITEM 1 --}}
-            <li class="border-b-2 border-b-zinc-200">
-                <a href=""
-                class="flex items-start gap-4 py-6 px-4 rounded-none hover:bg-zinc-100 focus:bg-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
-                <div class="text-4xl font-thin text-zinc-800/40 tabular-nums min-w-12 text-center">01</div>
+            {{-- @dd($artikelTerbitan) --}}
+            @forelse($artikelTerbitan as $idx => $a)
+                @php
+                $no = str_pad($idx + 1, 2, '0', STR_PAD_LEFT);
+                $tgl = optional($a->published_at)->translatedFormat('d M Y');
+                // penulis: pakai kolom teks terlebih dulu; kalau kosong, fallback relasi author
+                $penulis = $a->penulis ?: optional($a->author)->name;
+                $href = route('guest.artikel.show', $a->slug); // pastikan route ini ada
+                @endphp
 
-                <div class="flex-1">
+                <li class="border-b-2 border-b-zinc-200">
+                <a href="{{ $href }}"
+                    class="flex items-start gap-4 py-6 px-4 rounded-none hover:bg-zinc-100 focus:bg-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
+                    <div class="text-4xl font-thin text-zinc-800/40 tabular-nums min-w-12 text-center">{{ $no }}</div>
+
+                    <div class="flex-1">
                     <h3 class="text-lg font-semibold text-zinc-800 leading-snug">
-                    Dokumentasi Bahasa Gorontalo: Metodologi dan Hasil Awal
+                        {{ $a->judul }}
                     </h3>
+
                     <div class="text-xs uppercase font-semibold text-zinc-600 mt-0.5">
-                    S. Rahim, A. Nur — <time datetime="2025-05-10">10 Mei 2025</time>
+                        {{ $penulis ?: '—' }} — <time datetime="{{ optional($a->published_at)?->format('Y-m-d') }}">{{ $tgl ?: '—' }}</time>
                     </div>
-                    <p class="text-sm text-zinc-600 mt-1">
-                    Studi ini memaparkan pendekatan dokumentasi lapangan dan analisis fonologi pada variasi bahasa Gorontalo di dua kabupaten.
-                    </p>
-                </div>
 
-                <span class="inline-flex items-center justify-center btn btn-square btn-ghost"
-                        aria-hidden="true">
-                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
-                        <path d="M6 3L20 12 6 21 6 3z"></path>
-                    </g>
-                    </svg>
-                </span>
-                </a>
-            </li>
-
-            {{-- ITEM 2 --}}
-            <li class="border-b-2 border-b-zinc-200">
-                <a href="#" class="flex items-start gap-4 py-6 px-4 rounded-none hover:bg-zinc-100 focus:bg-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
-                <div class="text-4xl font-thin text-zinc-800/40 tabular-nums min-w-12 text-center">02</div>
-
-                <div class="flex-1">
-                    <h3 class="text-lg font-semibold text-zinc-800 leading-snug">
-                    Pelestarian Sastra Lisan: Arsip Audio dan Transkripsi
-                    </h3>
-                    <div class="text-xs uppercase font-semibold text-zinc-600 mt-0.5">
-                    R. Putri, M. Latu — <time datetime="2025-04-02">02 Apr 2025</time>
+                    @if(!empty($a->ringkasan))
+                        <p class="text-sm text-zinc-600 mt-1">
+                        {{ $a->ringkasan }}
+                        </p>
+                    @endif
                     </div>
-                    <p class="text-sm text-zinc-600 mt-1">
-                    Artikel membahas pembangunan arsip audio terstandarisasi dan teknik transkripsi berbasis komunitas untuk cerita rakyat lokal.
-                    </p>
-                </div>
 
-                <span class="inline-flex items-center justify-center btn btn-square btn-ghost" aria-hidden="true">
+                    <span class="inline-flex items-center justify-center btn btn-square btn-ghost" aria-hidden="true">
                     <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
+                        <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
                         <path d="M6 3L20 12 6 21 6 3z"></path>
-                    </g>
+                        </g>
                     </svg>
-                </span>
+                    </span>
                 </a>
-            </li>
-
-            {{-- ITEM 3 --}}
-            <li class="border-b-2 border-b-zinc-200">
-                <a href="#" class="flex items-start gap-4 py-6 px-4 rounded-none hover:bg-zinc-100 focus:bg-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
-                <div class="text-4xl font-thin text-zinc-800/40 tabular-nums min-w-12 text-center">03</div>
-
-                <div class="flex-1">
-                    <h3 class="text-lg font-semibold text-zinc-800 leading-snug">
-                    Integrasi Teknologi dalam Pembelajaran Bahasa Daerah
-                    </h3>
-                    <div class="text-xs uppercase font-semibold text-zinc-600 mt-0.5">
-                    L. Hidayat, E. Sari — <time datetime="2025-03-18">18 Mar 2025</time>
-                    </div>
-                    <p class="text-sm text-zinc-600 mt-1">
-                    Evaluasi prototipe aplikasi pembelajaran bahasa daerah yang menggabungkan audio native speaker dan kuis interaktif.
-                    </p>
+                </li>
+                
+            @empty
+                
+                <li class="p-6  border text-lg text-zinc-600">Belum ada artikel terbit.</li>
+            @endforelse
+            @if($artikelTerbitan->count() > 0)
+                <div class="w-full text-end mt-8">
+                    <a href="{{ route('guest.artikel.index') }}"
+                        class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900">
+                        Lihat Semua Artikel
+                    </a>
                 </div>
-
-                <span class="inline-flex items-center justify-center btn btn-square btn-ghost" aria-hidden="true">
-                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
-                        <path d="M6 3L20 12 6 21 6 3z"></path>
-                    </g>
-                    </svg>
-                </span>
-                </a>
-            </li>
+            @endif
         </ul>
 
         
     </div>
 
     {{-- ----------- Berita --------- --}}
-    <div class="mt-32 mb-16 px-6">
-  <div class="pb-1 w-full">
-    <p class="text-5xl font-title md:pl-5 text-start text-zinc-700">Kegiatan Terbaru</p>
-  </div>
-
-  <div class="container mx-auto">
-    <div class="grid md:grid-cols-3 gap-6 xl:gap-12">
-      @forelse($beritaTerbaru as $b)
-        @php
-          $thumb      = $b->thumbnail_path ? Storage::url($b->thumbnail_path) : asset('images/placeholder-16x9.png');
-          $tgl        = optional($b->published_at)->translatedFormat('d M Y');
-          $ringkas    = $b->ringkasan ?: '—';
-          // Penulis (opsional): pakai relasi author() bila ada; kalau tidak, coba kolom 'penulis'; kalau tidak ada juga, null
-          $authorName = (method_exists($b, 'author') ? optional($b->author)->name : null) ?? ($b->penulis ?? null);
-        @endphp
-
-        <article class="col-span-1 group duration-300 ease-in-out card-compact mx-auto md:mx-0 mt-7
-                        outline outline-0 hover:outline-1 hover:outline-zinc-800 hover:outline-offset-2 p-4 bg-white rounded-md">
-          <figure class="aspect-video w-full overflow-hidden rounded">
-            <a href="{{ route('guest.berita.show', $b->slug) }}">
-              <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                   src="{{ $thumb }}" alt="{{ $b->judul }}">
-            </a>
-          </figure>
-
-          <div class="mt-4">
-            <div class="w-fit mb-1">
-              <a href="{{ route('guest.berita.show', $b->slug) }}"
-                 class="text-xl text-zinc-800 font-title relative leading-6
-                        bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
-                        transition-[background-size] duration-500 ease-in-out
-                        group-hover:bg-[length:100%_1px] hover:text-zinc-500">
-                {{ $b->judul }}
-              </a>
-            </div>
-
-            <p class="text-[12px] text-zinc-500">
-              <span class="uppercase font-semibold">{{ $b->kategori ?? 'Kegiatan' }}</span>
-              — <time datetime="{{ optional($b->published_at)?->format('Y-m-d') }}">{{ $tgl ?: '—' }}</time>
-              @if($authorName) · <span>{{ $authorName }}</span> @endif
-            </p>
-
-            <p class="text-zinc-600 text-sm mt-2 line-clamp-2">{{ $ringkas }}</p>
-          </div>
-        </article>
-      @empty
-        <div class="col-span-3">
-          <div class="p-6 rounded-lg border text-zinc-600">Belum ada berita terbit.</div>
-        </div>
-      @endforelse
-    </div>
-
-    <div class="w-full text-end mt-8">
-      <a href="{{ route('guest.berita.index') }}"
-         class="btn hover:bg-white border-2 bg-black text-white text-md hover:text-zinc-900">
-        Lihat Semua Berita
-      </a>
-    </div>
-  </div>
-</div>
-
-
 
 </div>
 {{-- ----------- Gallery --------- --}}
 <div class="mb-12 sm:px-6 lg:px-36 mt-32 bg-zinc-900">
-    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-3  pt-24 md:pt-12 ">
+    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-3 pt-24 md:pt-12">
 
         <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-            <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-200">Arsip <br> & Galeri</p>
+            <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-200">Galeri <br> Pusat Studi</p>
         </div>
 
+        @foreach($featuredAlbums as $album)
         <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
                     outline outline-0 hover:outline-1 hover:outline-gray-200 hover:outline-offset-4 p-4">
             <figure>
-                <a href="{{ route('media') }}">
-                <img
-                class="w-full h-[200px] object-cover ease-in-out"
-                src="{{ asset('images/foto2.jpeg') }}"
-                alt="Shoes" />
+                <a href="{{ route('galeri.albums.show', $album->slug) }}">
+                    @if($album->cover_path)
+                    <img
+                        class="w-full h-[200px] object-cover ease-in-out"
+                        src="{{ asset('storage/' . $album->cover_path) }}"
+                        alt="{{ $album->judul }}" />
+                    @else
+                    <div class="w-full h-[200px] bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+                        <i class="fas fa-images text-gray-400 text-4xl"></i>
+                    </div>
+                    @endif
                 </a>
             </figure>
             <div class="mt-4">
                 <div class="w-fit mb-1">
-                    <a href="{{ route('media') }}" 
-                        class=" text-xl text-gray-200 font-title relative leading-4
-            bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
-            transition-[background-size] duration-500 ease-in-out
-            group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                        Studi Banding ke Universitas Pendidikan Indonesia, Bandung
+                    <a href="{{ route('galeri.albums.show', $album->slug) }}" 
+                        class="text-xl text-gray-200 font-title relative leading-4
+                            bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
+                            transition-[background-size] duration-500 ease-in-out
+                            group-hover:bg-[length:100%_1px] hover:text-cyan-700">
+                        {{ $album->judul }}
                     </a>
-                    <p class="text-zinc-500 text-sm">27/10/2025</p>
+                    <p class="text-zinc-500 text-sm">
+                        @if($album->published_at)
+                            {{ $album->published_at->format('d/m/Y') }}
+                        @else
+                            {{ $album->created_at->format('d/m/Y') }}
+                        @endif
+                    </p>
                 </div>
-
             </div>
         </div>
-        <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
-                    outline outline-0 hover:outline-1 hover:outline-gray-200 hover:outline-offset-4 p-4">
-            <figure>
-                <a href="{{ route('media') }}">
-                <img
-                class="w-full h-[200px] object-cover ease-in-out"
-                src="{{ asset('images/foto1.jpeg') }}"
-                alt="Shoes" />
-                </a>
-            </figure>
-            <div class="mt-4">
-                <div class="w-fit mb-1">
-                    <a href="{{ route('media') }}" 
-                        class=" text-xl text-gray-200 font-title relative leading-4
-            bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
-            transition-[background-size] duration-500 ease-in-out
-            group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                        Studi Banding ke Universitas Pendidikan Indonesia, Bandung
-                    </a>
-                    <p class="text-zinc-500 text-sm">27/10/2025</p>
-                </div>
+        @endforeach
 
-            </div>
-        </div>
-        {{-- <div class="col-span-1"></div> --}}
-
-        {{-- <div class="col-span-1 group w-96 duration-300 ease-in-out card-compact mx-auto md:mx-0
-                    outline outline-0 hover:outline-1 hover:outline-gray-200 hover:outline-offset-4 p-4">
-            <figure>
-                <a href="{{ route('media') }}">
-                <img
-                class="h-cover ease-in-out"
-                src=""
-                alt="Shoes" />
-                </a>
-            </figure>
-            <div class="mt-4">
-                <div class="w-fit mb-1">
-                    <a href="{{ route('media') }}" 
-                        class=" text-xl text-gray-200 font-title relative leading-4
-            bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
-            transition-[background-size] duration-500 ease-in-out
-            group-hover:bg-[length:100%_1px] hover:text-cyan-700">
-                        Studi Banding ke Universitas Pendidikan Indonesia, Bandung
-                    </a>
-                    <p class="text-zinc-500 text-sm">27/10/2025</p>
-                </div>
-
-            </div>
-        </div> --}}
     </div>
-    <div class=" text-end pb-12">
-        <a href="{{ route('media') }}" class="w-2/3 btn rounded-none hover:bg-zinc-100 border bg-zinc-900 text-zinc-100 text-md hover:text-zinc-900 relative leading-4
+    <div class="text-end pb-12">
+        <a href="{{ route('galeri.albums.index') }}" class="w-2/3 btn rounded-none hover:bg-zinc-100 border bg-zinc-900 text-zinc-100 text-md hover:text-zinc-900 relative leading-4
         bg-gradient-to-r from-current to-current bg-[length:0%_2px] bg-left-bottom bg-no-repeat
         transition-[background-size] duration-500 ease-in-out
-        group-hover:bg-[length:100%_1px] ">Lihat Galeri</a>
+        group-hover:bg-[length:100%_1px]">Lihat Galeri</a>
     </div>
-    {{-- <p class="lg:text-[50px] text-5xl font-title md:pl-12 text-start text-zinc-700">Arsip dan Galeri</p>
-    <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 pt-24 md:pt-20 md:pb-12">
-        <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-        </div>
-    </div> --}}
 </div>
 
-<section id="kontak" class="py-20 bg-white">
+<section id="kontak" class="py-20 mt-32 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-start mb-16">
             <h2 id="contact-title" class="font-title text-5xl text-zinc-900 mb-3">Kontak &amp; Kolaborasi</h2>
@@ -450,7 +378,7 @@
             </div> --}}
             </div>
             </div>
-            <div class="mt-8 p-6 bg-zinc-800 rounded-xl">
+            <div class="mt-8 p-6 bg-zinc-800 ">
             <h4 class="font-semibold text-zinc-100 mb-3">Jam Operasional</h4>
             <div class="text-sm text-slate-100 space-y-1">
             <div class="flex justify-between"><span>Senin - Jumat</span> <span>08:00 - 17:00 WIB</span>
@@ -462,27 +390,176 @@
             </div>
             </div>
             </div>
-            <div>
-            <h3 class="font-playfair text-2xl font-title text-zinc-800 mb-6">Formulir Kolaborasi</h3>
-                <form class="space-y-6">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label> <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label for="institution" class="block text-sm font-medium text-gray-700 mb-2">Institusi</label> <input type="text" id="institution" name="institution" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label> <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label for="collaboration-type" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kolaborasi</label> <select id="collaboration-type" name="collaboration-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> <option>Penelitian Bersama</option> <option>Konsultasi Akademik</option> <option>Kemitraan Industri</option> <option>Program Magang</option> <option>Lainnya</option> </select>
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Pesan</label> <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-lg font-semibold transition-colors"> Kirim Proposal Kolaborasi </button>
-                </form>
-            </div>
+                <div id="collaboration-form-container">
+                    <h3 class="font-playfair text-2xl font-title text-zinc-800 mb-6">Formulir Kolaborasi</h3>
+                    
+                    <form id="collaborationForm" class="space-y-6">
+                        @csrf
+                        
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
+                            <input type="text" id="name" name="name" required 
+                                class="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="institution" class="block text-sm font-medium text-gray-700 mb-2">Institusi *</label>
+                            <input type="text" id="institution" name="institution" required
+                                class="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="collaboration_type" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kolaborasi *</label>
+                            <select id="collaboration_type" name="collaboration_type" required
+                                    class="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Pilih Jenis Kolaborasi</option>
+                                <option value="Penelitian Bersama">Penelitian Bersama</option>
+                                <option value="Konsultasi Akademik">Konsultasi Akademik</option>
+                                <option value="Kemitraan Industri">Kemitraan Industri</option>
+                                <option value="Program Magang">Program Magang</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Pesan *</label>
+                            <textarea id="message" name="message" rows="4" required
+                                    class="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        </div>
+                        
+                        <!-- Response Message -->
+                        <div id="responseMessage" class="hidden p-4 "></div>
+                        
+                        <button type="submit" id="submitBtn" 
+                                class="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 px-4  font-semibold transition-colors">
+                            Kirim Proposal Kolaborasi
+                        </button>
+                    </form>
+                </div>
+
+            <script>
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('collaborationForm');
+                const submitBtn = document.getElementById('submitBtn');
+                const responseDiv = document.getElementById('responseMessage');
+                
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Disable button dan tampilkan loading
+                    const originalText = submitBtn.textContent;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Mengirim...';
+                    submitBtn.classList.add('opacity-50');
+                    
+                    // Sembunyikan pesan sebelumnya
+                    responseDiv.classList.add('hidden');
+                    
+                    // Kumpulkan data form
+                    const formData = new FormData(form);
+                    const data = Object.fromEntries(formData.entries());
+                    
+                    try {
+                        // Kirim request ke server
+                        const response = await fetch('{{ route("collaboration.submit") }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                            },
+                            body: JSON.stringify(data)
+                        });
+                        
+                        const result = await response.json();
+                        
+                        // Tampilkan pesan response
+                        if (response.ok && result.success) {
+                            responseDiv.className = 'p-4 bg-green-100 text-green-700 border border-green-300 rounded-lg';
+                            responseDiv.textContent = '✅ ' + result.message;
+                            form.reset(); // Reset form
+                        } else {
+                            responseDiv.className = 'p-4 bg-red-100 text-red-700 border border-red-300 rounded-lg';
+                            responseDiv.textContent = '❌ ' + (result.message || 'Terjadi kesalahan. Silakan coba lagi.');
+                        }
+                        
+                        responseDiv.classList.remove('hidden');
+                        
+                    } catch (error) {
+                        responseDiv.className = 'p-4 bg-red-100 text-red-700 border border-red-300 rounded-lg';
+                        responseDiv.textContent = '❌ Koneksi error. Silakan coba lagi.';
+                        responseDiv.classList.remove('hidden');
+                        console.error('Error:', error);
+                    } finally {
+                        // Reset button
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                        submitBtn.classList.remove('opacity-50');
+                    }
+                });
+            });
+            </script>
+
+            {{-- <script>
+            document.getElementById('collaborationForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const originalText = submitBtn.textContent;
+                const responseDiv = document.getElementById('responseMessage');
+                
+                // Disable button dan tampilkan loading
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Mengirim...';
+                responseDiv.classList.add('hidden');
+                
+                try {
+                    const formData = new FormData(this);
+                    
+                    const response = await fetch('{{ route("collaboration.submit") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        },
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Tampilkan pesan sukses
+                        responseDiv.className = 'p-4 mb-4 text-green-700 bg-green-100 border border-green-300';
+                        responseDiv.textContent = data.message;
+                        responseDiv.classList.remove('hidden');
+                        
+                        // Reset form
+                        this.reset();
+                    } else {
+                        // Tampilkan error
+                        responseDiv.className = 'p-4 mb-4 text-red-700 bg-red-100 border border-red-300';
+                        responseDiv.textContent = data.message || 'Terjadi kesalahan. Silakan coba lagi.';
+                        responseDiv.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    responseDiv.className = 'p-4 mb-4 text-red-700 bg-red-100 border border-red-300';
+                    responseDiv.textContent = 'Koneksi error. Silakan coba lagi.';
+                    responseDiv.classList.remove('hidden');
+                    console.error('Error:', error);
+                } finally {
+                    // Reset button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            });
+            </script> --}}
         </div>
     </div>
 </section>

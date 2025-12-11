@@ -7,6 +7,8 @@ use App\Models\Berita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 
 class BeritaController extends Controller
@@ -37,7 +39,7 @@ class BeritaController extends Controller
             $data = $request->validate([
                 'judul'         => ['required', 'string', 'max:255'],
                 'slug'          => ['nullable', 'string', 'max:255'],
-                'kategori'      => ['required', 'in:Kegiatan,Pengumuman,Rilis,Opini,Publikasi'],
+                'kategori'      => ['nullable', 'string', 'max:100'],
                 'tag'           => ['nullable', 'string', 'max:500'], // "a, b, c"
                 'ringkasan'     => ['nullable', 'string', 'max:600'],
                 'konten'        => ['required', 'string'],
@@ -162,7 +164,18 @@ class BeritaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $berita = Berita::findOrFail($id);
+
+        // Hapus thumbnail jika ada
+        if ($berita->thumbnail_path && Storage::disk('public')->exists($berita->thumbnail_path)) {
+            Storage::disk('public')->delete($berita->thumbnail_path);
+        }
+
+        $berita->delete();
+
+        return redirect()
+            ->route('admin.publikasi-data.berita.index')
+            ->with('success', 'Berita berhasil dihapus.');
     }
 
     /**

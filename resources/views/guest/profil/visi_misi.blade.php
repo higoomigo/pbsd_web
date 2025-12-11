@@ -5,10 +5,10 @@
 @section('content')
 <div class="mb-20">
     {{-- VISI --}}
-    <div class="mb-2 mt-8">
+    <div class="mb-2">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 md:pt-12">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-                <p class="lg:text-4xl text-5xl font-title text-start text-gray-900">Visi</p>
+                <p class="lg:text-4xl md:text-5xl text-3xl font-title text-start text-gray-900">Visi</p>
             </div>
             <div class="col-span-2 px-6 pb-6">
                 <p class="mb-1 text-lg text-gray-900 font-body leading-6.5 text-justify">
@@ -20,7 +20,7 @@
         {{-- MISI --}}
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 mb-6 md:pt-2">
             <div class="col-span-1 px-6 pb-1 w-full md:mb-6">
-                <p class="lg:text-4xl text-5xl font-title text-start text-gray-900">Misi</p>
+                <p class="lg:text-4xl md:text-5xl text-3xl font-title text-start text-gray-900">Misi</p>
             </div>
             <div class="col-span-2 px-6 pb-6">
                 @php
@@ -35,7 +35,12 @@
                         @endforeach
                     </ul>
                 @else
-                    <p class="text-lg text-gray-600">— Belum ada misi yang ditambahkan.</p>
+                    <ul class="list-disc mb-6 text-lg font-body text-gray-900">
+                    
+                            <li class="list-none text-lg text-gray-600">— Belum ada misi yang ditambahkan.</li>
+                        
+                    </ul>
+                    
                 @endif
             </div>
         </div>

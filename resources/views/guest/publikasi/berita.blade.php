@@ -13,18 +13,18 @@
     <input
       id="q" type="text" value="{{ $q }}"
       placeholder="Cari judul, tag…"
-      class="w-full sm:w-64 border border-zinc-300 rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      class="w-full sm:w-64 border border-zinc-300 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
     />
     <select
       id="kategori"
-      class="w-full sm:w-48 border border-zinc-300 rounded-md px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      class="w-full sm:w-48 border border-zinc-300 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
     >
       <option value="">Semua Kategori</option>
       @foreach($kategoriList as $opt)
         <option value="{{ $opt }}" @selected($kategori===$opt)>{{ $opt }}</option>
       @endforeach
     </select>
-    <button id="resetFilter" class="inline-flex items-center justify-center px-3 py-1.5 rounded-md bg-zinc-100 text-zinc-700 text-sm hover:bg-zinc-200" type="button">
+    <button id="resetFilter" class="inline-flex items-center justify-center px-3 py-1.5 bg-zinc-100 text-zinc-700 text-sm hover:bg-zinc-200" type="button">
       Reset
     </button>
   </form>
@@ -36,7 +36,7 @@
 
     {{-- Media List --}}
     {{-- Media List --}}
-<ul id="news-list" class="divide-y divide-zinc-200 bg-white border border-zinc-200 rounded-lg">
+<ul id="news-list" class="divide-y divide-zinc-200 bg-white hover:border-zinc-700 ">
   @forelse($berita as $b)
     @php
       $thumb   = $b->thumbnail_path ? Storage::url($b->thumbnail_path) : asset('images/placeholder-4x3.png');
@@ -57,8 +57,8 @@
       data-date="{{ $tglIso }}"
     >
       <a href="{{ $href }}"
-         class="group flex gap-3 sm:gap-4 items-start p-3 sm:p-4 hover:bg-zinc-50 focus:bg-zinc-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
-        <div class="relative flex-shrink-0 w-28 h-20 sm:w-36 sm:h-24 overflow-hidden rounded-md border border-zinc-200 bg-zinc-100">
+         class="group flex gap-3 sm:gap-4 items-start p-3 sm:p-4 hover:bg-zinc-50 hover:border-zinc-700 hover:border focus:bg-zinc-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition">
+        <div class="relative flex-shrink-0 w-28 h-20 sm:w-36 sm:h-24 overflow-hidden border border-zinc-200 bg-zinc-100">
           <img src="{{ $thumb }}" alt="{{ $b->judul }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" loading="lazy">
         </div>
 

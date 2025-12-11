@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             VisiMisiSeeder::class,
         ]);
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Admin Pusat Studi',
+            'email' => 'admin@gmail.com',
+        ]);
     }
 }

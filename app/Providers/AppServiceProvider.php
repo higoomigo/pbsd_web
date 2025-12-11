@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Berita;
 use Illuminate\Support\ServiceProvider;
 
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,7 +26,15 @@ class AppServiceProvider extends ServiceProvider
             // Jangan tampilkan aside di halaman berita (index & show)
             $hideForThisPage =
             request()->routeIs('guest.berita.*') ||
+            // request()->routeIs('mitra') ||
+            request()->routeIs('guest.artikel.*') ||
             // request()->routeIs('welcome') ||
+            request()->routeIs('guest.peneliti.*') ||
+            request()->routeIs('guest.kegiatan-penelitian.*') ||
+            request()->routeIs('guest.kerjasama-riset.*') ||
+            // request()->routeIs('guest.publikasi-terindeks.show') ||
+            
+            request()->routeIs('galeri.*') ||
             request()->is('/');
 
             if ($hideForThisPage) {

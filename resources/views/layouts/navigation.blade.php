@@ -5,20 +5,25 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('admin.dashboard') }}">
                         {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
-                        <p class="font-bold text-zinc-800">Admin Dashboard</p>
+                        <p class="font-bold text-zinc-800">Admin <br> <span class="">Pages</span></p>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.profil.index')" :active="request()->routeIs('admin.profil.*')">
-                        {{ __('Tentang Kami') }}
-                    </x-nav-link>
+                    @if(Auth::user() && Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.user.index')" :active="request()->routeIs('admin.user.*')">
+                            {{ __('Kelola User') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.profil.index')" :active="request()->routeIs('admin.profil.*')">
+                            {{ __('Tentang Kami') }}
+                        </x-nav-link>
+                    @endif
                     {{-- <x-nav-link :href="route('admin.akademik.index')" :active="request()->routeIs('admin.akademik.*')">
                         {{ __('Akademik') }}
                     </x-nav-link> --}}
@@ -28,10 +33,15 @@
                     <x-nav-link :href="route('admin.publikasi-data.index')" :active="request()->routeIs('admin.publikasi-data.*')">
                         {{ __('Publikasi') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.fasilitas.index')" :active="request()->routeIs('admin.fasilitas.*')">
-                        {{ __('Fasilitas') }}
+                    <x-nav-link :href="route('admin.penelitian.index')" :active="request()->routeIs('admin.penelitian.*')">
+                        {{ __('Penelitian') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.kontak.index')" :active="request()->routeIs('admin.kotak.*')">
+                    @if(Auth::user() && Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.fasilitas.index')" :active="request()->routeIs('admin.fasilitas.*')">
+                            {{ __('Fasilitas') }}
+                        </x-nav-link>
+                    @endif
+                    <x-nav-link :href="route('admin.kontak.index')" :active="request()->routeIs('admin.kontak.*')">
                         {{ __('Kontak') }}
                     </x-nav-link>
                 </div>
@@ -86,7 +96,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.profil.index')" :active="request()->routeIs('admin.profil.*')">
@@ -104,9 +114,9 @@
             <x-responsive-nav-link :href="route('admin.fasilitas.index')" :active="request()->routeIs('admin.fasilitas.*')">
                 {{ __('Fasilitas') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.kontak.index')" :active="request()->routeIs('admin.kotak.*')">
+            {{-- <x-responsive-nav-link :href="route('admin.kontak.index')" :active="request()->routeIs('admin.kotak.*')">
                 {{ __('Kontak') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
         </div>
 
         <!-- Responsive Settings Options -->

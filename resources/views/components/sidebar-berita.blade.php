@@ -4,11 +4,11 @@
   // offset sticky biar sejajar header kamu
   'stickyTop' => 'top-24',
   // judul blok
-  'heading' => 'Berita Terbaru',
+  'heading' => 'Kegiatan Terbaru Pusat Studi',
 ])
 
-<aside class="w-full pt-20 ml-16 pr-16">
-  <div class="sticky {{ $stickyTop }}">
+<aside class="w-full pt-20 ml-16 pr-16 ">
+  <div class="sticky {{ $stickyTop }} border-l border-zinc-300 p-5">
 
     {{-- Heading kecil & rapat --}}
     <h3 class="text-[16px] font-semibold uppercase tracking-wide text-zinc-600 mb-2">

@@ -23,10 +23,10 @@ class VisiMisiSeeder extends Seeder
         ];
 
         // Pastikan cuma satu baris: update kalau ada, buat kalau belum ada
-        // VisiMisi::query()->updateOrCreate(
-        //     ['id' => 1],
-        //     ['visi' => $visi, 'misi' => $misi]
-        // );
+        VisiMisi::query()->updateOrCreate(
+            ['id' => 1],
+            ['visi' => $visi, 'misi' => $misi]
+        );
     }
 }
 

@@ -1,5 +1,5 @@
 <?php
-
+// app/Http/Controllers/Auth/AuthenticatedSessionController.php
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -28,7 +28,40 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Cek jika user sudah diverifikasi (role bukan 'pending')
+        $user = Auth::user();
+        
+        if ($user->role === 'pending') {
+            // Jika belum diverifikasi, logout dan kembalikan ke login
+            Auth::logout();
+            
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            
+            return back()->withErrors([
+                'email' => 'Akun Anda belum diverifikasi oleh admin. Silakan tunggu verifikasi atau hubungi administrator.',
+            ])->onlyInput('email');
+        }
+
+        // Redirect berdasarkan role
+        if ($user->role === 'admin') {
+            return redirect()->intended(route('admin.dashboard'));
+        }
+        
+        return redirect()->intended(route('admin.dashboard', absolute: false));
+    }
+
+    /**
+     * Redirect user berdasarkan role
+     */
+    private function redirectBasedOnRole($user): RedirectResponse
+    {
+        if ($user->role === 'admin') {
+            return redirect()->intended(route('admin.dashboard'));
+        }
+        
+        // Untuk role user, editor, dll (yang sudah diverifikasi)
+        return redirect()->intended(route('admin.dashboard'));
     }
 
     /**
@@ -39,7 +72,6 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');

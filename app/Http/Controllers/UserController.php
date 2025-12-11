@@ -8,20 +8,52 @@ use App\Models\Pages;
 use App\Models\Mitra;
 use App\Models\VisiMisi;
 use App\Models\Berita;
+use App\Models\Artikel;
+use App\Models\Struktur;
+use App\Models\GaleriAlbum;
+use App\Models\Fasilitas;
+use App\Models\WebsiteVisit;
 
 class UserController extends Controller
 {
 
     #1 LAnfinng LAKjtou
     public function welcome()
-    {
+    {   
+
+        $visitModel = new WebsiteVisit(); 
+    
+        // Catat kunjungan dengan menyertakan IP dan Session (paling disarankan)
+        $visitModel->visit()->withIP()->withSession(); 
+        // dd($visitModel);
+        
+        // Opsional: Jika Anda ingin menghitung kunjungan unik, 
+        // Anda bisa memberikan kunci yang sama untuk semua kunjungan ke halaman ini.
+        // $visitModel->visit('home')->withIP()->withSession();
+        //  $fasilitas = Fasilitas::getUntukBeranda();
         // $berita = Berita::all();
         // 3 terbaru yang status 'Terbit' (atau published_at != null)
+        // Ambil 2 album terbaru atau album yang ditandai featured
+        $featuredAlbums = GaleriAlbum::published()
+            ->where('tampil_beranda', true) // Jika ada field untuk featured
+            ->orWhere(function($query) {
+                $query->published()->latest('published_at');
+            })
+            ->withCount('media')
+            ->limit(2)
+            ->get();
+        $artikelTerbitan = Artikel::with('author')
+        ->latest('published_at')
+        ->take(3)
+        ->get(['id','judul','slug','ringkasan','penulis','author_id','kategori','published_at']);
+        // dd($artikelTerbitan);  
         $beritaTerbaru = Berita::query()
             ->take(3)
             ->get(['id','judul','slug','ringkasan','thumbnail_path','published_at','author_id','kategori']);
-        $mitra = Mitra::all();
-        return view('welcome', compact('mitra', 'beritaTerbaru'));
+        $mitra = Mitra::query()
+            ->orderBy('urutan', 'asc')
+            ->get();
+        return view('welcome', compact('mitra', 'beritaTerbaru', 'artikelTerbitan', 'featuredAlbums'));
     }   
     // Landing Routes
     public function profilFull()
@@ -44,7 +76,15 @@ class UserController extends Controller
 
     public function strukturOrganisasi()
     {
-        return view('guest.profil.struktur_organisasi');
+        // Ambil struktur terbaru (kalau cuma ada 1 record, tetap aman)
+        $struktur = Struktur::query()
+            ->orderByDesc('created_at')
+            ->first();
+
+        return view('guest.profil.struktur_organisasi', [
+            'struktur'      => $struktur,
+        ]);
+        
     }
 
     public function roadmapAsta()
@@ -71,6 +111,11 @@ class UserController extends Controller
     public function media()
     {
         return view('guest.publikasi.media');
+    }
+    public function artikel()
+    {
+
+        return view('guest.publikasi.artikel');
     }
     // public function jurnal()
     // {
@@ -127,8 +172,15 @@ class UserController extends Controller
 
     //--------------------------//
     // Dropdown FASILITAS Route //
-    public function fasilitasRiset(){
-        return view('guest.fasilitas.fasilitas_riset');
+    public function fasilitasIndex()
+    {
+        // Ambil fasilitas yang aktif, diurutkan berdasarkan urutan tampil
+        $fasilitas = Fasilitas::where('tampil_beranda', true)
+            ->orderBy('urutan_tampil', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('guest.fasilitas.index', compact('fasilitas'));
     }
 
     public function sopProsedur(){

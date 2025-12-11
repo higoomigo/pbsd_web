@@ -5,7 +5,7 @@
     </h2>
   </x-slot>
 
-  <div class="py-8">
+  <div class="py-8" data-theme="light">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="overflow-hidden group shadow-sm sm:rounded-lg hover:shadow-md transition-shadow bg-white p-6">
         <div class="flex items-center justify-between mb-4">
@@ -29,10 +29,10 @@
         @endif
 
         {{-- $kebijakan diasumsikan dari controller --}}
-        <form action="{{ route('admin.profil.kebijakan.create') }}"
+        <form action="{{ route('admin.profil.kebijakan.store') }}"
               method="POST" enctype="multipart/form-data" class="space-y-6">
           @csrf
-          @method('PUT')
+          @method('POST')
 
           {{-- Identitas Dokumen --}}
           <div class="grid md:grid-cols-2 gap-6">

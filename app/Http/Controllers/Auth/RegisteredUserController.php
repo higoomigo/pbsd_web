@@ -39,12 +39,16 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'pending', // Tambahkan ini
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
-        Auth::login($user);
+        // HAPUS baris Auth::login($user); agar user tidak langsung login
+        // Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Redirect ke login dengan pesan bahwa akun menunggu verifikasi
+        return redirect()->route('login')
+            ->with('status', 'Registrasi berhasil! Akun Anda menunggu verifikasi admin. Anda akan bisa login setelah akun diverifikasi.');
     }
 }
