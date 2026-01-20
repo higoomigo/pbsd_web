@@ -8,7 +8,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {{-- Welcome Section --}}
-            <div class="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-6">
+            <div class="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100  p-6">
                 <div class="flex flex-col md:flex-row md:items-center justify-between">
                     <div>
                         <h1 class="text-2xl font-bold text-gray-900">Selamat datang, {{ Auth::user()->name }}! 👋</h1>
@@ -18,7 +18,7 @@
                         </p>
                     </div>
                     <div class="mt-4 md:mt-0">
-                        <span class="inline-flex items-center px-4 py-2 bg-white border border-blue-300 rounded-lg text-sm font-medium text-blue-700">
+                        <span class="inline-flex items-center px-4 py-2 bg-white border border-blue-300  text-sm font-medium text-blue-700">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
@@ -29,12 +29,12 @@
             </div>
 
             {{-- START: Full-Width Website Visits Highlight --}}
-            <div class="mb-8 bg-white overflow-hidden rounded-xl border border-yellow-200">
+            <div class="mb-8 bg-white overflow-hidden  border border-yellow-200">
                 <div class="p-6">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                         {{-- Total Kunjungan (Highlight) --}}
                         <div class="flex items-center mb-4 sm:mb-0">
-                            <div class="flex-shrink-0 bg-yellow-100 p-4 rounded-xl mr-4">
+                            <div class="flex-shrink-0 bg-yellow-100 p-4  mr-4">
                                 {{-- Icon Kunjungan (Mata) --}}
                                 <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -72,10 +72,10 @@
             {{-- Quick Stats Grid --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {{-- Berita Card --}}
-                <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-blue-100 p-3 rounded-lg">
+                            <div class="flex-shrink-0 bg-blue-100 p-3 ">
                                 <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                                 </svg>
@@ -108,10 +108,10 @@
                 </div>
 
                 {{-- Penelitian Card --}}
-                <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-purple-100 p-3 rounded-lg">
+                            <div class="flex-shrink-0 bg-purple-100 p-3 ">
                                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
                                 </svg>
@@ -144,10 +144,10 @@
                 </div>
 
                 {{-- Fasilitas Card --}}
-                <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-green-100 p-3 rounded-lg">
+                            <div class="flex-shrink-0 bg-green-100 p-3 ">
                                 <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                 </svg>
@@ -175,10 +175,10 @@
                 </div>
 
                 {{-- Users Card --}}
-                <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-red-100 p-3 rounded-lg">
+                            <div class="flex-shrink-0 bg-red-100 p-3 ">
                                 <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5 3.714V9.286a.75.75 0 00-.546-.721A41.4 41.4 0 0012 8c-2.828 0-5.483.957-7.546 2.564A.75.75 0 004 9.286v12.428a.75.75 0 00.546.721 41.403 41.403 0 007.454 1.564c2.828 0 5.483-.957 7.546-2.564a.75.75 0 00.546-.721z"/>
                                 </svg>
@@ -218,15 +218,15 @@
                 {{-- Left Column --}}
                 <div class="lg:col-span-2 space-y-8">
                     {{-- Chart Section --}}
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                    <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                         <div class="p-6">
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-lg font-semibold text-gray-900">Statistik Publikasi</h3>
                                 <div class="flex space-x-2">
-                                    <button id="monthly-btn" class="px-3 py-1 text-xs font-medium rounded-lg bg-blue-100 text-blue-700 transition">
+                                    <button id="monthly-btn" class="px-3 py-1 text-xs font-medium  bg-blue-100 text-blue-700 transition">
                                         Bulanan
                                     </button>
-                                    {{-- <button id="weekly-btn" class="px-3 py-1 text-xs font-medium rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
+                                    {{-- <button id="weekly-btn" class="px-3 py-1 text-xs font-medium  bg-gray-100 text-gray-700 hover:bg-gray-200 transition">
                                         Mingguan
                                     </button> --}}
                                 </div>
@@ -238,7 +238,7 @@
                     </div>
 
                     {{-- Quick Actions --}}
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                    <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                         <div class="p-6">
                             <div class="flex justify-between items-center mb-6">
                                 <h3 class="text-lg font-semibold text-gray-900">Aksi Cepat</h3>
@@ -247,9 +247,9 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {{-- Publikasi & Data --}}
-                                <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:shadow-sm transition">
+                                <div class="border border-gray-200  p-4 hover:border-blue-300 hover:shadow-sm transition">
                                     <div class="flex items-center mb-3">
-                                        <div class="p-2 bg-blue-100 rounded-lg mr-3">
+                                        <div class="p-2 bg-blue-100  mr-3">
                                             <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                                             </svg>
@@ -282,9 +282,9 @@
                                 </div>
 
                                 {{-- Penelitian --}}
-                                <div class="border border-gray-200 rounded-lg p-4 hover:border-purple-300 hover:shadow-sm transition">
+                                <div class="border border-gray-200  p-4 hover:border-purple-300 hover:shadow-sm transition">
                                     <div class="flex items-center mb-3">
-                                        <div class="p-2 bg-purple-100 rounded-lg mr-3">
+                                        <div class="p-2 bg-purple-100  mr-3">
                                             <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
                                             </svg>
@@ -310,9 +310,9 @@
                                 </div>
 
                                 {{-- Tentang Kami --}}
-                                <div class="border border-gray-200 rounded-lg p-4 hover:border-green-300 hover:shadow-sm transition">
+                                <div class="border border-gray-200  p-4 hover:border-green-300 hover:shadow-sm transition">
                                     <div class="flex items-center mb-3">
-                                        <div class="p-2 bg-green-100 rounded-lg mr-3">
+                                        <div class="p-2 bg-green-100  mr-3">
                                             <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                             </svg>
@@ -338,9 +338,9 @@
                                 </div>
 
                                 {{-- Fasilitas --}}
-                                <div class="border border-gray-200 rounded-lg p-4 hover:border-yellow-300 hover:shadow-sm transition">
+                                <div class="border border-gray-200  p-4 hover:border-yellow-300 hover:shadow-sm transition">
                                     <div class="flex items-center mb-3">
-                                        <div class="p-2 bg-yellow-100 rounded-lg mr-3">
+                                        <div class="p-2 bg-yellow-100  mr-3">
                                             <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                             </svg>
@@ -369,7 +369,7 @@
                     </div>
 
                     {{-- Recent Berita --}}
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                    <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                         <div class="p-6">
                             <div class="flex justify-between items-center mb-6">
                                 <h3 class="text-lg font-semibold text-gray-900">Berita Terbaru</h3>
@@ -381,8 +381,8 @@
 
                             <div class="space-y-4">
                                 @forelse($recentBerita as $berita)
-                                    <div class="flex items-center p-3 hover:bg-gray-50 rounded-lg transition">
-                                        <div class="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-lg overflow-hidden">
+                                    <div class="flex items-center p-3 hover:bg-gray-50  transition">
+                                        <div class="flex-shrink-0 w-12 h-12 bg-gray-100  overflow-hidden">
                                             @if($berita->thumbnail_path)
                                                 <img src="{{ Storage::url($berita->thumbnail_path) }}"
                                                     alt="{{ $berita->judul }}"
@@ -431,7 +431,7 @@
                 {{-- Right Column --}}
                 <div class="space-y-8">
                     {{-- Recent Activities --}}
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                    <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                         <div class="p-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-6">Aktivitas Terbaru</h3>
 
@@ -439,7 +439,7 @@
                                 @forelse($recentActivities as $activity)
                                     <div class="flex items-start">
                                         <div class="flex-shrink-0">
-                                            <div class="p-2 rounded-lg {{ $activity['color'] }}">
+                                            <div class="p-2  {{ $activity['color'] }}">
                                                 @if($activity['icon'] === 'newspaper')
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
@@ -479,7 +479,7 @@
 
                     {{-- Upcoming Seminars --}}
                     @if($upcomingSeminars->count() > 0)
-                        <div class="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
+                        <div class="bg-white overflow-hidden shadow-sm  border border-gray-200">
                             <div class="p-6">
                                 <div class="flex justify-between items-center mb-6">
                                     <h3 class="text-lg font-semibold text-gray-900">Seminar Mendatang</h3>
@@ -516,7 +516,7 @@
 
                     {{-- Pending Comments --}}
                     @if($stats['pending_komentar'] > 0)
-                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                        <div class="bg-yellow-50 border border-yellow-200  p-6">
                             <div class="flex items-start">
                                 <div class="flex-shrink-0">
                                     <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -530,7 +530,7 @@
                                     </div>
                                     <div class="mt-3">
                                         <a href="{{ route('admin.publikasi-data.komentar.index') }}"
-                                           class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-yellow-700 bg-yellow-100 hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                           class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium text-yellow-700 bg-yellow-100 hover:bg-yellow-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
                                             Tinjau Komentar
                                         </a>
                                     </div>
@@ -540,7 +540,7 @@
                     @endif
 
                     {{-- Website Status --}}
-                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-6">
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200  p-6">
                         <h3 class="text-lg font-semibold text-gray-900 mb-4">Status Website</h3>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">

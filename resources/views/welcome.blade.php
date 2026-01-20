@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class=" w-full h-[500px]  mb-6 opacity-0 translate-y-8 transition-all duration-700 ease-out mt-20" id="hero-image">
-    <img class="w-full h-full object-cover" src="https://www.researchgate.net/publication/371827625/figure/fig3/AS:11431281179849279@1691415873069/The-Harbour-Office-area-in-Gorontalo-circa-1926-Source-Digital-Collection-Leiden.png" alt="">
+    <img class="w-full h-full object-cover" src="{{ asset('images/patunglaggga.jpg') }}" alt="">
 </div>
 
 <!-- Main content -->
@@ -47,8 +47,10 @@
                 <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-center text-zinc-700">Fokus Penelitian</p>
             </div>
         </div> --}}
-        <p class="lg:text-[50px] text-5xl font-title  text-center text-zinc-700">Mitra Kami</p>
-
+        <div class="text-center">
+            <p class="lg:text-[50px] text-5xl font-title text-zinc-700">Mitra Kami</p>
+            <p class="mt-5 text-zinc-500"> Mitra Kerja Sama Pusat Studi Pelestarian Bahasa dan Sastra Daerah</p>
+        </div>
         <div class="relative mt-6 w-full flex justify-center">
             <!-- Left / Right buttons positioned at the sides of the wrapping div -->
             <button id="partners-prev" aria-label="Previous"
@@ -163,7 +165,7 @@
         <p class="text-5xl font-title md:pl-5 text-start text-zinc-700">Kegiatan Terbaru</p>
     </div>
 
-    <div class="container mx-auto">
+    <div class="container mx-auto mt-7">
         <div class="grid md:grid-cols-3 gap-6 xl:gap-12">
         @forelse($beritaTerbaru as $b)
             @php
@@ -221,7 +223,7 @@
     <div class="mt-32 mb-16">
         <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-6 pt-24 md:pt-4 md:pl-5 "> 
             <div class="col-span-1 pb-1 w-full">
-                <p class="lg:text-[50px] text-5xl font-title md:pl-5 text-start text-zinc-700">Artikel Terbitan</p>
+                <p class="lg:text-[50px] text-5xl font-title md:pl-5 pl-6 text-start text-zinc-700">Artikel Terbitan</p>
             </div>
         </div>
         <ul class="list bg-base-100 px-6 mt-6" role="list">

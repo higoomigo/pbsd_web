@@ -4,7 +4,7 @@
 @section('judul_halaman', 'Artikel Terbitan Pusat Studi')
 
 @section('content')
-<div class="py-8">
+<div class="pb-8">
   {{-- karena layout sudah kasih container, di sini cukup w-full + padding tambahan di desktop --}}
   <div class="w-full lg:px-10 xl:px-36">
 

@@ -35,18 +35,33 @@
                     @endif
                 </div>
             </div> --}}
-
+            {{-- Kepala Pusat Studi --}}
+            @php
+                $kepalaPusat = $penelitiInternal->firstWhere('jabatan', 'Kepala Pusat Studi');
+            @endphp
+            @if($kepalaPusat)
+            <div class="mb-12 items-center text-center">
+                <div class="mb-8">
+                    <h2 class="font-title text-2xl md:text-3xl text-gray-900 mb-2">Kepala Pusat Studi</h2>
+                </div>
+                <div class="grid grid-cols-1 shadow-none gap-6">
+                    @include('guest.peneliti.partials.card', ['peneliti' => $kepalaPusat])
+                </div>
+            </div>
+            @endif
             {{-- Section: Peneliti Internal --}}
             @if(count($penelitiInternal) > 0)
             <section id="internal" class="mb-16 scroll-mt-8">
                 <div class="mb-8">
-                    <h2 class="font-title text-2xl md:text-3xl text-gray-900 mb-2">Peneliti Internal</h2>
+                    {{-- <h2 class="font-title text-2xl md:text-3xl text-gray-900 mb-2">Peneliti Internal</h2> --}}
                     <p class="text-gray-600">Tim peneliti utama dari Pusat Studi Pelestarian Bahasa dan Sastra Daerah</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     @foreach($penelitiInternal as $peneliti)
-                        @include('guest.peneliti.partials.card', ['peneliti' => $peneliti])
+                        @if($peneliti->jabatan !== 'Kepala Pusat Studi')
+                            @include('guest.peneliti.partials.card', ['peneliti' => $peneliti])
+                        @endif
                     @endforeach
                 </div>
             </section>

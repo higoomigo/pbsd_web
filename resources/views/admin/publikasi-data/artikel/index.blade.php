@@ -26,8 +26,9 @@
                 <th>Thumb</th>
                 <th>Judul</th>
                 <th>Kategori</th>
-                <th>Status</th>
+                {{-- <th>Status</th> --}}
                 <th>Penulis</th>
+                <th>Kunjungan</th>
                 <th>Terbit</th>
                 <th style="min-width:140px;">Aksi</th>
               </tr>
@@ -67,11 +68,21 @@
 
                   <td class="text-zinc-700 whitespace-nowrap">{{ $a->kategori ?? '-' }}</td>
 
-                  <td class="text-center">
+                  {{-- <td class="text-center">
                     <span class="px-2 py-1 rounded text-xs {{ $statusCls }}">{{ $statusVal }}</span>
-                  </td>
+                  </td> --}}
 
                   <td class="whitespace-nowrap text-zinc-700">{{ $authorName }}</td>
+                  <td class="text-center whitespace-nowrap text-zinc-700">
+                    {{-- @php
+                    // Mengambil jumlah views dari collection $artikelVisitCounts 
+                    // berdasarkan ID artikel saat ini ($item->id)
+                        $viewCount = $artikelVisitCounts->get($a->id);
+                    @endphp --}}
+                    
+                    {{ number_format($a->visits_count) }}x
+
+                  </td>
 
                   <td class="whitespace-nowrap text-zinc-700">{{ $tgl ?: '—' }}</td>
 

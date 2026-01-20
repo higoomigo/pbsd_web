@@ -81,7 +81,7 @@
                                     'bg-red-100 text-red-800';
                             @endphp
 
-                            <div class="mitra-item bg-white p-6 hover:shadow-lg transition-all duration-300 h-full flex flex-col items-center justify-center text-center"
+                            <div class="mitra-item bg-white p-6 transition-all duration-300 h-full flex flex-col items-center justify-center text-center"
                                  data-nama="{{ Str::lower($mitra->nama) }}"
                                  data-deskripsi="{{ Str::lower($mitra->deskripsi) }}"
                                  data-jenis="{{ Str::lower($mitra->jenis) }}"

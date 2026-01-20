@@ -45,7 +45,7 @@
         <div class="mt-3 pt-3 border-t border-gray-100">
             <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
                 @if($album->kategori)
-                    <span class="bg-gray-100 px-2 py-1 rounded text-xs uppercase font-semibold">
+                    <span class="bg-gray-100 px-2 py-1 rounded text-xs uppercase font-semibold group-hover:bg-zinc-700 group-hover:text-white transition">
                         {{ $album->kategori }}
                     </span>
                 @endif

@@ -3,14 +3,17 @@
 // app/Models/Artikel.php
 namespace App\Models;
 
+use Coderflex\Laravisit\Concerns\CanVisit; // Import Interface
+use Coderflex\Laravisit\Concerns\HasVisits; // Import Trait
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
-class Artikel extends Model
+class Artikel extends Model implements CanVisit
 {
     use HasFactory;
+    use HasVisits; // Gunakan Trait HasVisits
 
     protected $table = 'artikels'; // ganti ke 'beritas' kalau pakai tabel beritas
 

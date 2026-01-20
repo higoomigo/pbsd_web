@@ -8,18 +8,44 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ArtikelController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // 1. Ambil data dasar artikel yang akan dipaginasi
         $artikel = Artikel::with('author')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+            
+        $artikelIds = $artikel->pluck('id');
 
+        // 2. 💡 SOLUSI FINAL: Ambil hitungan views menggunakan DB::table (JAMINAN BERHASIL)
+        $artikelVisitCounts = DB::table('laravisits')
+            // Filter hanya ID artikel yang ada di halaman ini
+            ->whereIn('visitable_id', $artikelIds)
+            // Filter hanya untuk Model Artikel
+            ->where('visitable_type', Artikel::class) 
+            // Hitung views per ID
+            ->select('visitable_id', DB::raw('COUNT(*) as visits_count'))
+            ->groupBy('visitable_id')
+            ->get()
+            // Konversi ke format [id => views_count]
+            ->keyBy('visitable_id')
+            ->map(fn($item) => $item->visits_count); // Ambil hanya jumlah hitungan
+
+        // 3. Gabungkan hitungan yang benar ke dalam objek paginasi utama ($artikel)
+        $artikel->getCollection()->transform(function ($item) use ($artikelVisitCounts) {
+            // Ambil hitungan views dari collection DB::table, jika null beri nilai 0
+            $item->visits_count = $artikelVisitCounts->get($item->id) ?? 0;
+            return $item;
+        });
+
+        // 4. Kirim HANYA satu variabel yang sudah lengkap ke view
         return view('admin.publikasi-data.artikel.index', [
             'artikel' => $artikel,
         ]);

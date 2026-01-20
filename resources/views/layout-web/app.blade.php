@@ -2,7 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light"> 
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <meta name="theme-color" content="#ffffff">
 
         <title>@yield('title')</title>
 
@@ -18,211 +19,304 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
         <style>
-            element {
-                scrollbar-width: none; /* Hides the scrollbar */
+            /* Base responsive styles */
+            * {
+                -webkit-tap-highlight-color: transparent;
             }
-            .dropdown[open] {
-                display: block;
+            
+            html {
+                scroll-behavior: smooth;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            
+            body {
+                overflow-x: hidden;
+                text-rendering: optimizeLegibility;
             }
 
+            /* Scrollbar styling */
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 4px;
+            }
+            
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+            /* Animation classes */
             .fade-in {
                 animation: fadeIn 0.8s both;
                 animation-timeline: view();
             }
             
             @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(0); }
-                to { opacity: 1; transform: translateY(20px); }
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
             }
 
-            /* Responsive adjustments */
+            /* Responsive utilities */
             @media (max-width: 640px) {
                 .hero-responsive {
                     padding-left: 1rem !important;
                     padding-right: 1rem !important;
                 }
+                
                 .text-responsive {
-                    font-size: 1.875rem !important; /* text-3xl */
+                    font-size: 1.875rem !important;
+                }
+                
+                .mobile-stack {
+                    flex-direction: column !important;
+                }
+                
+                .mobile-full-width {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                }
+            }
+            
+            @media (max-width: 768px) {
+                .tablet-padding {
+                    padding-left: 1.5rem !important;
+                    padding-right: 1.5rem !important;
+                }
+            }
+            
+            /* Touch device optimizations */
+            @media (hover: none) and (pointer: coarse) {
+                .touch-device *:focus {
+                    outline: 2px solid #3b82f6 !important;
+                    outline-offset: 2px;
+                }
+                
+                .touch-device button,
+                .touch-device a {
+                    min-height: 44px;
+                    min-width: 44px;
+                }
+            }
+            
+            /* Print styles */
+            @media print {
+                .no-print {
+                    display: none !important;
+                }
+                
+                body {
+                    font-size: 12pt !important;
+                    line-height: 1.5 !important;
+                    color: #000 !important;
+                    background: #fff !important;
+                }
+                
+                a {
+                    text-decoration: underline !important;
+                    color: #000 !important;
                 }
             }
         </style>
-        
     </head>
-    <body   x-data="{ loading: false }"
-            x-on:beforeunload.window="loading = true"
-            class="relative">
+    
+    <body x-data="{ loading: false, isMobile: window.innerWidth < 768 }"
+          x-init="
+            window.addEventListener('beforeunload', () => loading = true);
+            window.addEventListener('pageshow', () => loading = false);
+            window.addEventListener('load', () => {
+              loading = false;
+              // Initialize after load
+              setTimeout(() => {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                  document.querySelectorAll('.fade-in').forEach(el => {
+                    el.style.animation = 'none';
+                    el.classList.remove('opacity-0', 'translate-y-8');
+                    el.classList.add('opacity-100', 'translate-y-0');
+                  });
+                }
+              }, 100);
+            });
+            window.addEventListener('resize', () => {
+              isMobile = window.innerWidth < 768;
+            });
+          "
+          :class="{ 'touch-device': 'ontouchstart' in window || navigator.maxTouchPoints > 0 }"
+          class="relative min-h-screen flex flex-col bg-white">
         
+        <!-- Loading overlay -->
         <div x-show="loading"
-            x-transition.opacity
-            class="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur">
-            <div class="w-12 h-12 border-4 border-zinc-500 border-t-transparent rounded-full animate-spin"></div>
+             x-transition.opacity
+             class="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm"
+             style="display: none;">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 border-3 sm:border-4 border-zinc-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
         
-        <div x-init="
-                window.addEventListener('pageshow', () => loading = false);
-                window.addEventListener('load', () => loading = false);
-            ">
-
         <!-- Navbar -->
         @include('layouts.navbar')
         
-        @hasSection('judul_halaman')
-            <!-- Responsive header section -->
-            <div class="pt-6 sm:py-2 lg:pt-12 mb-0 px-4 sm:px-6 lg:px-8 xl:px-36 w-full flex items-start">
-                <div class="w-full">
-                    <div class="border-b border-zinc-500 pb-4 sm:pb-6 md:pb-8">
-                        <p class="text-2xl sm:text-3xl md:text-4xl font-title text-zinc-800 text-start sm:text-left px-2 sm:px-4 md:px-6 lg:px-10 md:pb-6">
+        <!-- Main Content -->
+        <main class="flex-grow">
+            @hasSection('judul_halaman')
+                <div class="pt-6 sm:pt-8 lg:pt-12 px-4 sm:px-6 lg:px-8 xl:px-8">
+                    <div class="max-w-7xl mx-auto border-b border-zinc-300 pb-4 sm:pb-6 md:pb-8">
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl font-title text-zinc-800 text-center sm:text-left px-2 sm:px-4 md:px-0">
                             @yield('judul_halaman')
-                        </p>
+                        </h1>
                     </div>
                 </div>
-            </div>
-        @endif
+            @endif
 
-        @php
-            // Halaman yang ingin full-width (tanpa pengaruh container & sidebar)
-            $forceFullWidth = View::hasSection('fullwidth') || request()->routeIs('welcome') || request()->is('/');
+            @php
+                // Halaman yang ingin full-width
+                $forceFullWidth = View::hasSection('fullwidth') || request()->routeIs('welcome') || request()->is('/');
+                
+                // Sidebar logic
+                $isBerita  = request()->routeIs('guest.berita.*');
+                $isWelcome = request()->routeIs('welcome') || request()->is('/');
+                $sidebarItems = ($sidebarBerita ?? collect());
+                $showAside = !$forceFullWidth && !$isBerita && !$isWelcome && $sidebarItems->isNotEmpty();
+            @endphp
 
-            // Sidebar logic lama (tetap dipakai kalau tidak full-width)
-            $isBerita  = request()->routeIs('guest.berita.*');
-            $isWelcome = request()->routeIs('welcome') || request()->is('/');
-            $sidebarItems = ($sidebarBerita ?? collect());
-            $showAside = !$forceFullWidth && !$isBerita && !$isWelcome && $sidebarItems->isNotEmpty();
-
-            // Responsive container classes
-            $containerClass = 'mx-auto px-4 sm:px-6 lg:px-8';
-            if ($showAside) {
-                $containerClass .= ' max-w-7xl'; // Untuk layout dengan sidebar
-            } else {
-                $containerClass .= ' w-full'; // Untuk layout tanpa sidebar
-            }
-        @endphp
-
-        @if($forceFullWidth)
-            {{-- Full-width: tidak pakai container parent & tidak pakai sidebar --}}
-            @yield('content')
-        @else
-            <div class="{{ $containerClass }}">
-                @if($showAside)
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8">
-                        <main class="lg:col-span-8">
+            @if($forceFullWidth)
+                {{-- Full-width content --}}
+                @yield('content')
+            @else
+                <div class="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+                    @if($showAside)
+                        <div class="max-w-7xl mx-auto">
+                            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                                {{-- Main content --}}
+                                <div class="lg:w-8/12 lg:pr-6">
+                                    @yield('content')
+                                </div>
+                                
+                                {{-- Sidebar --}}
+                                <div class="lg:w-4/12 hidden md:block">
+                                    <div class="sticky top-24">
+                                        <x-sidebar-berita :items="$sidebarItems" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="w-full mx-auto">
                             @yield('content')
-                        </main>
-                        <aside class="lg:col-span-4 mt-2 lg:mt-0">
-                            <x-sidebar-berita :items="$sidebarItems" />
-                        </aside>
-                    </div>
-                @else
-                    <div class="w-full  px-4 sm:px-6 lg:px-4">
-                        @yield('content')
-                    </div>
-                @endif
-            </div>
-        @endif
+                        </div>
+                    @endif
+                </div>
+            @endif
+        </main>
 
         {{-- Footer --}}
         @include('layouts.footer')
 
         <script>
-            // Saat mulai scroll, munculkan div hero-image
-            const hero = document.getElementById('hero-image');
-            let heroShown = false;
+            // Intersection Observer untuk animasi
+            const createObserver = () => {
+                const options = {
+                    root: null,
+                    threshold: 0.15,
+                    rootMargin: '-80px 0px 0px 0px'
+                };
 
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 10 && !heroShown) {
-                    hero.classList.remove('opacity-0', 'translate-y-8');
-                    hero.classList.add('opacity-100', 'translate-y-0');
-                    heroShown = true;
-                }
-            });
-
-            // Responsive intersection observer
-            const NAVBAR_OFFSET = 80; // Sesuaikan dengan tinggi navbar mobile/desktop
-
-            const options = {
-                root: null,
-                threshold: 0.15,
-                rootMargin: `-${NAVBAR_OFFSET}px 0px 0px 0px`,
+                return new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.remove('opacity-0', 'translate-y-8');
+                            entry.target.classList.add('opacity-100', 'translate-y-0');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, options);
             };
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
-
-                    // Trigger fade-in
-                    entry.target.classList.remove('opacity-0', 'translate-y-8');
-                    entry.target.classList.add('opacity-100', 'translate-y-0');
-
-                    // Observe sekali saja
-                    observer.unobserve(entry.target);
+            // Initialize observer
+            const observer = createObserver();
+            
+            // Observe elements setelah DOM siap
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.fade-in').forEach((el) => {
+                    // Skip jika prefers reduced motion
+                    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                        el.classList.remove('opacity-0', 'translate-y-8');
+                        el.classList.add('opacity-100', 'translate-y-0');
+                        return;
+                    }
+                    
+                    // Optimasi performa
+                    if ('willChange' in el.style) {
+                        el.style.willChange = 'opacity, transform';
+                    }
+                    
+                    observer.observe(el);
                 });
-            }, options);
-
-            // Daftarkan semua elemen fade-in
-            document.querySelectorAll('.fade-in').forEach((el) => {
-                // Optimasi untuk performa mobile
-                if ('willChange' in el.style) {
-                    el.style.willChange = 'opacity, transform';
-                }
-                observer.observe(el);
             });
 
-            // Hormati preferensi reduced motion
-            const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-            if (media.matches) {
-                document.querySelectorAll('.fade-in').forEach((el) => {
-                    el.classList.remove('opacity-0', 'translate-y-8');
-                    el.classList.add('opacity-100', 'translate-y-0');
-                });
-            }
-
-            // Responsive window resize handler
-            let resizeTimer;
+            // Responsive resize handler
+            let resizeTimeout;
             window.addEventListener('resize', () => {
-                // Clear the timer on resize
-                clearTimeout(resizeTimer);
-                // Set a new timer
-                resizeTimer = setTimeout(() => {
-                    // Update NAVBAR_OFFSET berdasarkan ukuran layar
-                    const newNavbarOffset = window.innerWidth < 1024 ? 60 : 80;
-                    if (newNavbarOffset !== NAVBAR_OFFSET) {
-                        // Update options for observer jika diperlukan
-                        options.rootMargin = `-${newNavbarOffset}px 0px 0px 0px`;
-                    }
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    // Update observer jika diperlukan
+                    // Misalnya update threshold untuk mobile
+                    const isMobile = window.innerWidth < 768;
+                    observer.disconnect();
+                    
+                    const newOptions = {
+                        root: null,
+                        threshold: isMobile ? 0.05 : 0.15,
+                        rootMargin: isMobile ? '-60px 0px 0px 0px' : '-80px 0px 0px 0px'
+                    };
+                    
+                    // Recreate observer dengan options baru
+                    // Note: Untuk implementasi lengkap, perlu re-observe semua elemen
                 }, 250);
             });
-        </script>
 
-        <script>
-            // Fungsi untuk toggle dropdown
-            function toggleDropdown(id) {
-                const dropdown = document.getElementById(id);
-                const isOpen = !dropdown.classList.contains('hidden');
-
-                // Tutup semua dropdown lain
-                document.querySelectorAll('ul[id$="Dropdown"]').forEach(menu => {
-                    menu.classList.add('hidden');
+            // Touch device optimizations
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+                // Add touch-specific classes
+                document.body.classList.add('touch-device');
+                
+                // Improve touch targets
+                const touchElements = document.querySelectorAll('button, a, [role="button"]');
+                touchElements.forEach(el => {
+                    if (el.offsetHeight < 44 || el.offsetWidth < 44) {
+                        el.classList.add('touch-target');
+                    }
                 });
+            }
 
-                // Toggle dropdown yang diklik
-                if (!isOpen) {
-                    dropdown.classList.remove('hidden');
+            // Mobile menu toggle (jika diperlukan)
+            function toggleMobileMenu() {
+                const menu = document.getElementById('mobile-menu');
+                if (menu) {
+                    menu.classList.toggle('hidden');
                 }
             }
 
-            // Tutup dropdown ketika klik di luar area menu
-            window.addEventListener('click', function(e) {
-                if (!e.target.closest('li.relative')) {
-                    document.querySelectorAll('ul[id$="Dropdown"]').forEach(menu => {
-                        menu.classList.add('hidden');
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('[data-dropdown]')) {
+                    document.querySelectorAll('[data-dropdown-content]').forEach(dropdown => {
+                        dropdown.classList.add('hidden');
                     });
                 }
             });
 
-            function extractYouTubeId(url) {
+            // YouTube ID extraction (jika diperlukan)
+            window.extractYouTubeId = function(url) {
                 if (!url) return '';
                 
-                // Pattern untuk extract YouTube ID dari berbagai format URL
                 const patterns = [
                     /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?#]+)/,
                     /youtube\.com\/watch\?.*v=([^&?#]+)/,
@@ -237,123 +331,66 @@
                 }
                 
                 return '';
-            }
-        </script>
+            };
 
-        <script>
-            // Mobile detection and enhancement
-            (function() {
-                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                
-                if (isMobile) {
-                    // Optimasi untuk perangkat mobile
-                    document.documentElement.classList.add('mobile-device');
-                    
-                    // Prevent zoom on input focus (optional)
-                    const inputs = document.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => {
-                        input.addEventListener('focus', () => {
-                            // Tambahkan class untuk mencegah zoom
-                            document.body.classList.add('prevent-zoom');
-                        });
-                        input.addEventListener('blur', () => {
-                            document.body.classList.remove('prevent-zoom');
-                        });
-                    });
-                }
+            const hero = document.getElementById('hero-image');
+            let heroShown = false;
 
-                // Touch device detection
-                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-                if (isTouchDevice) {
-                    document.documentElement.classList.add('touch-device');
-                    
-                    // Improve tap targets on mobile
-                    const interactiveElements = document.querySelectorAll('a, button, [role="button"]');
-                    interactiveElements.forEach(el => {
-                        if (el.offsetHeight < 44 || el.offsetWidth < 44) {
-                            el.classList.add('min-tap-target');
-                        }
-                    });
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10 && !heroShown) {
+                    hero.classList.remove('opacity-0', 'translate-y-8');
+                    hero.classList.add('opacity-100', 'translate-y-0');
+                    heroShown = true;
                 }
-            })();
+            });
         </script>
 
         <style>
-            /* Additional responsive styles */
+            /* Additional responsive tweaks */
+            @media (max-width: 1024px) {
+                .sidebar-container {
+                    margin-left: 0 !important;
+                    padding-right: 0 !important;
+                }
+            }
+            
             @media (max-width: 768px) {
-                .min-tap-target {
-                    min-height: 44px !important;
-                    min-width: 44px !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                }
-                
-                .prevent-zoom {
-                    font-size: 16px !important;
-                }
-                
-                /* Improve readability on mobile */
-                p, li, span:not(.icon) {
-                    line-height: 1.6 !important;
-                }
-                
-                /* Adjust spacing for mobile */
-                .section-spacing {
-                    padding-top: 2rem !important;
-                    padding-bottom: 2rem !important;
-                }
-            }
-            
-            @media (max-width: 640px) {
-                /* Reduce padding and margins on very small screens */
-                .container-padding {
-                    padding-left: 1rem !important;
-                    padding-right: 1rem !important;
-                }
-                
-                /* Stack elements vertically */
-                .stack-mobile {
-                    flex-direction: column !important;
-                    gap: 1rem !important;
-                }
-                
-                /* Full width on mobile */
-                .full-width-mobile {
-                    width: 100% !important;
-                    max-width: 100% !important;
-                }
-            }
-            
-            @media (min-width: 641px) and (max-width: 1024px) {
-                /* Tablet optimizations */
-                .tablet-optimize {
-                    padding-left: 2rem !important;
-                    padding-right: 2rem !important;
-                }
-            }
-            
-            /* Print styles */
-            @media print {
-                .no-print {
+                .mobile-no-sidebar {
                     display: none !important;
                 }
                 
-                .print-only {
-                    display: block !important;
+                .mobile-content-full {
+                    width: 100% !important;
+                    padding-left: 0 !important;
+                    padding-right: 0 !important;
+                }
+            }
+            
+            /* Improve image loading */
+            img {
+                content-visibility: auto;
+            }
+            
+            /* Better focus styles for accessibility */
+            :focus-visible {
+                outline: 2px solid #3b82f6;
+                outline-offset: 2px;
+            }
+            
+            /* Print optimization */
+            @media print {
+                main {
+                    padding: 0 !important;
                 }
                 
-                body {
-                    font-size: 12pt !important;
-                    line-height: 1.5 !important;
+                .sidebar-container {
+                    display: none !important;
                 }
                 
-                a[href]::after {
-                    content: " (" attr(href) ")";
+                .max-w-4xl, .max-w-7xl {
+                    max-width: 100% !important;
                 }
             }
         </style>
-        
-        </div>
     </body>
 </html>

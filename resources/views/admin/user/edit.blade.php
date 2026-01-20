@@ -108,7 +108,7 @@
                     </div>
 
                     {{-- Status Email --}}
-                    <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+                    {{-- <div class="mb-8 p-4 bg-gray-50 rounded-lg">
                         <h4 class="text-md font-medium text-gray-900 mb-2">Status Email</h4>
                         <div class="flex items-center">
                             @if($user->email_verified_at)
@@ -130,7 +130,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- Informasi Tambahan --}}
                     <div class="mb-8">

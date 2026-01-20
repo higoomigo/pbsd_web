@@ -62,6 +62,9 @@ class GuestArtikelController extends Controller
      */
     public function show(string $slug)
     {
+        // $article = new Artikel();
+        // $article->visit()->withIP()->withUser();
+
         $artikel = Artikel::where('slug', $slug)
         ->where('published_at', '<=', now())
         ->with(['author', 'komentarApproved' => function($query) {
@@ -69,6 +72,10 @@ class GuestArtikelController extends Controller
                   ->orderBy('created_at', 'desc');
         }])
         ->firstOrFail();
+
+        $artikel->visit()->withIP()->withUser();
+
+        $artikelVisit = $artikel->visits()->count();
 
         // Get previous and next articles
         $previousArticle = Artikel::where('published_at', '<=', now())
@@ -81,7 +88,7 @@ class GuestArtikelController extends Controller
             ->orderBy('published_at', 'asc')
             ->first();
 
-        return view('guest.artikel.show', compact('artikel', 'previousArticle', 'nextArticle'));
+        return view('guest.artikel.show', compact('artikel', 'previousArticle', 'nextArticle', 'artikelVisit'));
     }
 
     /**

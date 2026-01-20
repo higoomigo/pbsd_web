@@ -51,6 +51,7 @@ class UserController extends Controller
             ->take(3)
             ->get(['id','judul','slug','ringkasan','thumbnail_path','published_at','author_id','kategori']);
         $mitra = Mitra::query()
+            ->where('status', 'Aktif')
             ->orderBy('urutan', 'asc')
             ->get();
         return view('welcome', compact('mitra', 'beritaTerbaru', 'artikelTerbitan', 'featuredAlbums'));
