@@ -7,6 +7,7 @@ use App\Models\Artikel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+
 class AdminKomentarController extends Controller
 {
     /**
@@ -14,17 +15,18 @@ class AdminKomentarController extends Controller
      */
     public function index(Request $request)
     {
-        $status = $request->get('status', 'pending');
+        $status = $request->get('status', 'all');
         
         $query = Komentar::with(['artikel', 'user'])
             ->orderBy('created_at', 'desc');
         
+        // Tanpa menggunakan scope, langsung dengan where
         switch ($status) {
             case 'approved':
-                $query->approved();
+                $query->where('is_approved', true);
                 break;
             case 'pending':
-                $query->pending();
+                $query->where('is_approved', false);
                 break;
             default:
                 // semua komentar
@@ -47,12 +49,13 @@ class AdminKomentarController extends Controller
             ->with(['user'])
             ->orderBy('created_at', 'desc');
         
+        // Tanpa menggunakan scope, langsung dengan where
         switch ($status) {
             case 'approved':
-                $query->approved();
+                $query->where('is_approved', true);
                 break;
             case 'pending':
-                $query->pending();
+                $query->where('is_approved', false);
                 break;
             default:
                 // semua komentar
@@ -69,10 +72,11 @@ class AdminKomentarController extends Controller
      */
     public function approve(Komentar $komentar)
     {
+        // dd("askdjfnaksdnfjkansdfkjasdfj");
         $komentar->is_approved = true;
         $komentar->save();
         
-        return back()->with('success', 'Komentar berhasil disetujui.');
+    return back()->with('success', 'Komentar berhasil disetujui.');
     }
     
     /**
@@ -80,55 +84,81 @@ class AdminKomentarController extends Controller
      */
     public function reject(Komentar $komentar)
     {
-        $komentar->delete();
+        $komentar->is_approved = false;
+        $komentar->save();
+        // $komentar->delete();
         
-        return back()->with('success', 'Komentar berhasil ditolak dan dihapus.');
+        return back()->with('success', 'Komentar berhasil ditolak/ditarik.');
     }
+
+    // public function destroy(Komentar $komentar)
+    // {
+    //     $komentar->delete();
+        
+    //     return back()->with('success', 'Komentar berhasil dihapus.');
+    // }   
     
     /**
      * Bulk action for komentar
      */
     public function bulkAction(Request $request)
     {
-        // Debug: cek data yang diterima
-        // dd($request->all());
-        
-        $request->validate([
+        // Validasi input
+        $validated = $request->validate([
             'action' => 'required|in:approve,reject,delete',
-            'ids' => 'required|array',
-            'ids.*' => 'exists:komentars,id'
+            'ids' => 'required|array|min:1'
+        ], [
+            'ids.required' => 'Pilih minimal satu komentar',
+            'ids.min' => 'Pilih minimal satu komentar'
         ]);
         
-        $action = $request->input('action');
-    $ids = $request->input('ids', []);
+        $action = $validated['action'];
+        $ids = $validated['ids'];
         
-        // Pastikan ids adalah array dan tidak kosong
-        if (!is_array($ids) || empty($ids)) {
+        // Filter array untuk menghapus nilai null/empty
+        $ids = array_filter($ids);
+        
+        if (empty($ids)) {
             return back()->with('error', 'Tidak ada komentar yang dipilih.');
         }
-        // dd("saayskfjhaskjdfhfkj");
-        switch ($action) {
-            case 'approve':
-                $affected = Komentar::whereIn('id', $ids)
-                    ->update(['is_approved' => true]);
-                $message = $affected . ' komentar berhasil disetujui.';
-                break;
-                
-            case 'reject':
-                $affected = Komentar::whereIn('id', $ids)->delete();
-                $message = $affected . ' komentar berhasil ditolak dan dihapus.';
-                break;
-                
-            case 'delete':
-                $affected = Komentar::whereIn('id', $ids)->delete();
-                $message = $affected . ' komentar berhasil dihapus.';
-                break;
-                
-            default:
-                return back()->with('error', 'Aksi tidak valid. Pilih antara: approve, reject, atau delete.');
+        
+        // Validasi bahwa semua ID benar-benar ada di database
+        $existingIds = Komentar::whereIn('id', $ids)->pluck('id')->toArray();
+        $nonExistingIds = array_diff($ids, $existingIds);
+        
+        if (!empty($nonExistingIds)) {
+            return back()->with('error', 'Beberapa komentar tidak ditemukan. Silakan refresh halaman.');
         }
         
-        return back()->with('success', $message);
+        $affected = 0;
+        
+        try {
+            switch ($action) {
+                case 'approve':
+                    $affected = Komentar::whereIn('id', $ids)
+                        ->update([
+                            'is_approved' => true,
+                            'updated_at' => now()
+                        ]);
+                    $message = $affected . ' komentar berhasil disetujui.';
+                    break;
+                    
+                case 'reject':
+                case 'delete':
+                    $affected = Komentar::whereIn('id', $ids)->delete();
+                    $message = $affected . ' komentar berhasil ' . 
+                              ($action === 'reject' ? 'ditolak' : 'dihapus.');
+                    break;
+                    
+                default:
+                    return back()->with('error', 'Aksi tidak valid.');
+            }
+            
+            return back()->with('success', $message);
+            
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
     
     /**
@@ -136,7 +166,13 @@ class AdminKomentarController extends Controller
      */
     public function show(Komentar $komentar)
     {
-        $komentar->load(['artikel', 'user', 'parent']);
+        // Load relasi dengan pengecekan jika ada
+        $komentar->load(['artikel', 'user']);
+        
+        // Jika ada relasi parent, load juga
+        if (method_exists($komentar, 'parent')) {
+            $komentar->load(['parent']);
+        }
         
         return view('admin.komentar.show', compact('komentar'));
     }
@@ -146,8 +182,11 @@ class AdminKomentarController extends Controller
      */
     public function destroy(Komentar $komentar)
     {
-        $komentar->delete();
-        
-        return back()->with('success', 'Komentar berhasil dihapus.');
+        try {
+            $komentar->delete();
+            return back()->with('success', 'Komentar berhasil dihapus.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menghapus komentar: ' . $e->getMessage());
+        }
     }
 }

@@ -44,10 +44,6 @@ class AdminController extends Controller
     //     });
     // }
 
-
-    
-
-
     public function index(Request $request)
     {
         // // Cek role admin

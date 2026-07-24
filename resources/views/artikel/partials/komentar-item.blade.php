@@ -62,13 +62,13 @@
                                  class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-zinc-200">
                                 <div class="py-1">
                                     {{-- Reply Button --}}
-                                    <button @click="showReplyForm({{ $komentar->id }}); open = false" 
+                                    {{-- <button @click="showReplyForm({{ $komentar->id }}); open = false" 
                                             class="flex items-center w-full px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100">
                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
                                         </svg>
                                         Balas
-                                    </button>
+                                    </button> --}}
                                     
                                     {{-- Edit Button --}}
                                     @if($canEdit)
